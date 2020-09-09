@@ -19,10 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Galaxy\Test.h" />
+    <ClInclude Include="src\Galaxy.h" />
+    <ClInclude Include="src\Galaxy\Core\Application.h" />
+    <ClInclude Include="src\Galaxy\Core\EntryPoint.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Galaxy\Test.cpp" />
+    <ClCompile Include="src\Galaxy\Core\Application.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

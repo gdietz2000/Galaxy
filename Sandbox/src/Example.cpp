@@ -1,12 +1,22 @@
 #include <iostream>
 
-#include "Galaxy/Test.h"
+#include "Galaxy.h"
 
-int main()
+class SandboxApp : public Galaxy::Application
 {
-	Galaxy::Print();
+public:
+	SandboxApp()
+	{
+	
+	}
+	
+	~SandboxApp()
+	{
+		
+	}
+};
 
-	std::cin.ignore();
-
-	return 0;
+Galaxy::Application* Galaxy::CreateApplication()
+{
+	return new SandboxApp();
 }
