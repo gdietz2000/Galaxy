@@ -10,6 +10,13 @@ workspace "Galaxy"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+IncludeDir = {}
+IncludeDir["ImGui"] = "Galaxy/vendor/ImGui"
+
+group "Dependencies"
+	include "Galaxy/vendor/ImGui"
+group ""
+
 	project "Galaxy"
 		location "Galaxy"
 		kind "StaticLib"
@@ -32,7 +39,13 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 		includedirs
 		{
 			"%{prj.name}/src",
-			"%{prj.name}/vendor/spdlog/include"
+			"%{prj.name}/vendor/spdlog/include",
+			"%{IncludeDir.ImGui}"
+		}
+
+		links
+		{
+			"ImGui"
 		}
 
 		defines 

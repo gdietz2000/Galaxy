@@ -2,6 +2,8 @@
 
 #include "Application.h"
 
+#include "Galaxy/ImGui/ImGuiLayer.h"
+
 namespace Galaxy 
 {
 	Application* Application::s_Instance;
@@ -14,6 +16,9 @@ namespace Galaxy
 		GX_CORE_INFO("Application Created");
 		m_Window = Scope<Window>(Window::Create());
 		m_Window->SetEventCallback(GX_BIND(Application::OnEvent));
+
+		m_ImGuiLayer = new ImGuiLayer();
+		PushLayer(m_ImGuiLayer);
 	}
 
 	Application::~Application()
@@ -25,8 +30,16 @@ namespace Galaxy
 	{
 		while (m_Running)
 		{
+
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
+
+			m_ImGuiLayer->Begin();
+
+			for (Layer* layer : m_LayerStack)
+				layer->OnImGuiRender();
+
+			m_ImGuiLayer->End();
 
 			m_Window->OnUpdate();
 		}

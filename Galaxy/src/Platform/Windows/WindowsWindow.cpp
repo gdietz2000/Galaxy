@@ -5,6 +5,10 @@
 #include "Galaxy/Events/KeyEvent.h"
 #include "Galaxy/Events/MouseEvent.h"
 
+#include "examples/imgui_impl_win32.h"
+
+extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
 namespace Galaxy
 {
 	WindowsWindow::WindowData WindowsWindow::m_Data;
@@ -25,10 +29,17 @@ namespace Galaxy
 		Shutdown();
 	}
 
+	
+
+
 	LRESULT CALLBACK WindowsWindow::WindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	{
+		if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
+			return true;
+
 		switch (msg)
 		{
+		//Window Close
 		case WM_CLOSE:
 		{
 			WindowCloseEvent e;
@@ -36,12 +47,68 @@ namespace Galaxy
 			PostQuitMessage(0);
 			return 0;
 		}
+
+		//Mouse Button Events
+		case WM_LBUTTONDOWN:
+		{
+			MouseButtonPressedEvent e(0);
+			m_Data.EventCallback(e);
+			return 0;
+		}
+		case WM_LBUTTONUP:
+		{
+			MouseButtonReleasedEvent e(0);
+			m_Data.EventCallback(e);
+			return 0;
+		}
+		case WM_RBUTTONDOWN:
+		{
+			MouseButtonPressedEvent e(1);
+			m_Data.EventCallback(e);
+			return 0;
+		}
+		case WM_RBUTTONUP:
+		{
+			MouseButtonReleasedEvent e(1);
+			m_Data.EventCallback(e);
+			return 0;
+		}
+		case WM_MBUTTONDOWN:
+		{
+			MouseButtonPressedEvent e(2);
+			m_Data.EventCallback(e);
+			return 0;
+		}
+		case WM_MBUTTONUP:
+		{
+			MouseButtonReleasedEvent e(2);
+			m_Data.EventCallback(e);
+			return 0;
+		}
+
+		//Key Events
 		case WM_KEYDOWN:
 		{
 			KeyPressedEvent e(wParam, lParam);
 			m_Data.EventCallback(e);
 			return 0;
 		}
+		case WM_KEYUP:
+		{
+			KeyReleasedEvent e(wParam);
+			m_Data.EventCallback(e);
+			return 0;
+		}
+		case WM_CHAR:
+		{
+			KeyTypedEvent e(wParam);
+			m_Data.EventCallback(e);
+			return 0;
+		}
+		//TODO: Mouse Position
+
+
+		//Window Resize
 		case WM_SIZE:
 		{
 			m_Data.width = LOWORD(lParam);
@@ -89,8 +156,7 @@ namespace Galaxy
 			__debugbreak();
 		}
 
-		//m_Window = CreateWindow(wcex.lpszClassName, wcex.lpszMenuName, WS_OVERLAPPEDWINDOW, CW_DEFAULT, CW_DEFAULT, m_Data.width, m_Data.height, NULL, NULL, NULL, NULL);
-		HWND m_Window = CreateWindow(L"Galaxy App", ws.c_str(), WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, m_Data.width, m_Data.height,	NULL, NULL,	NULL, NULL);
+		m_Window = CreateWindow(L"Galaxy App", ws.c_str(), WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, m_Data.width, m_Data.height,	NULL, NULL,	NULL, NULL);
 
 		if (m_Window == nullptr)
 		{
@@ -109,8 +175,11 @@ namespace Galaxy
 
 	void WindowsWindow::OnUpdate()
 	{
+
 		MSG msg;
-		if (GetMessage(&msg, NULL, 0, 0))
+
+
+		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 		{
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);

@@ -4,6 +4,7 @@
 
 #include "Window.h"
 #include "LayerStack.h"
+#include "Galaxy/ImGui/ImGuiLayer.h"
 #include "Galaxy/Events/ApplicationEvent.h"
 
 namespace Galaxy
@@ -21,7 +22,7 @@ namespace Galaxy
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* layer);
 
-		static inline Application* Get() { return s_Instance; }
+		static inline Application& Get() { return *s_Instance; }
 		inline Window& GetWindow() { return *m_Window; }
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
@@ -30,6 +31,7 @@ namespace Galaxy
 
 		Scope<Window> m_Window;
 		bool m_Running = true;
+		ImGuiLayer* m_ImGuiLayer;
 		LayerStack m_LayerStack;
 		static Application* s_Instance;
 	};

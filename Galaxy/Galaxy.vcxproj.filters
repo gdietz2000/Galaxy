@@ -10,6 +10,12 @@
     <Filter Include="Galaxy\Events">
       <UniqueIdentifier>{4F1193D8-BBD1-0E0F-840C-588CF08B53EB}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Galaxy\ImGui">
+      <UniqueIdentifier>{355909E0-21BC-9884-CA41-D13AB6836407}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Galaxy.h" />
@@ -22,7 +28,16 @@
     <ClInclude Include="src\Galaxy\Core\EntryPoint.h">
       <Filter>Galaxy\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Galaxy\Core\Layer.h">
+      <Filter>Galaxy\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Galaxy\Core\LayerStack.h">
+      <Filter>Galaxy\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Galaxy\Core\Log.h">
+      <Filter>Galaxy\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Galaxy\Core\Window.h">
       <Filter>Galaxy\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Galaxy\Events\ApplicationEvent.h">
@@ -37,22 +52,34 @@
     <ClInclude Include="src\Galaxy\Events\MouseEvent.h">
       <Filter>Galaxy\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\Galaxy\ImGui\ImGuiLayer.h">
+      <Filter>Galaxy\ImGui</Filter>
+    </ClInclude>
     <ClInclude Include="src\gxpch.h" />
-    <ClInclude Include="src\Galaxy\Core\Window.h" />
-    <ClInclude Include="src\Platform\WindowsWindow.h" />
-    <ClInclude Include="src\Galaxy\Core\Layer.h" />
-    <ClInclude Include="src\Galaxy\Core\LayerStack.h" />
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
+      <Filter>Platform</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Galaxy\Core\Application.cpp">
       <Filter>Galaxy\Core</Filter>
     </ClCompile>
+    <ClCompile Include="src\Galaxy\Core\Layer.cpp">
+      <Filter>Galaxy\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Galaxy\Core\LayerStack.cpp">
+      <Filter>Galaxy\Core</Filter>
+    </ClCompile>
     <ClCompile Include="src\Galaxy\Core\Log.cpp">
       <Filter>Galaxy\Core</Filter>
     </ClCompile>
+    <ClCompile Include="src\Galaxy\ImGui\ImGuiLayer.cpp">
+      <Filter>Galaxy\ImGui</Filter>
+    </ClCompile>
     <ClCompile Include="src\gxpch.cpp" />
-    <ClCompile Include="src\Platform\WindowsWindow.cpp" />
-    <ClCompile Include="src\Galaxy\Core\Layer.cpp" />
-    <ClCompile Include="src\Galaxy\Core\LayerStack.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
+      <Filter>Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Galaxy\ImGui\ImGuiBuild.cpp" />
   </ItemGroup>
 </Project>
