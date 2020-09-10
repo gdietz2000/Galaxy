@@ -2,6 +2,8 @@
 
 #include "Application.h"
 #include "Log.h"
+#include "Galaxy/Events/Event.h"
+#include "Galaxy/Events/ApplicationEvent.h"
 
 extern Galaxy::Application* Galaxy::CreateApplication();
 

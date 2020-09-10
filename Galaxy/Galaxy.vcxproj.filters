@@ -7,10 +7,16 @@
     <Filter Include="Galaxy\Core">
       <UniqueIdentifier>{0333984C-6FE8-1042-F8DC-0A1964910746}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Galaxy\Events">
+      <UniqueIdentifier>{4F1193D8-BBD1-0E0F-840C-588CF08B53EB}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Galaxy.h" />
     <ClInclude Include="src\Galaxy\Core\Application.h">
+      <Filter>Galaxy\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Galaxy\Core\Core.h">
       <Filter>Galaxy\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Galaxy\Core\EntryPoint.h">
@@ -19,6 +25,19 @@
     <ClInclude Include="src\Galaxy\Core\Log.h">
       <Filter>Galaxy\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Galaxy\Events\ApplicationEvent.h">
+      <Filter>Galaxy\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Galaxy\Events\Event.h">
+      <Filter>Galaxy\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Galaxy\Events\KeyEvent.h">
+      <Filter>Galaxy\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Galaxy\Events\MouseEvent.h">
+      <Filter>Galaxy\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gxpch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Galaxy\Core\Application.cpp">
@@ -27,5 +46,6 @@
     <ClCompile Include="src\Galaxy\Core\Log.cpp">
       <Filter>Galaxy\Core</Filter>
     </ClCompile>
+    <ClCompile Include="src\gxpch.cpp" />
   </ItemGroup>
 </Project>

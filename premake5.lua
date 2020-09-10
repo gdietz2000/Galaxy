@@ -17,6 +17,9 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 		cppdialect "C++17"
 		staticruntime "On"
 
+		pchheader "gxpch.h"
+		pchsource "Galaxy/src/gxpch.cpp"
+
 		targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 		objdir ("bin/" .. outputdir .. "/%{prj.name}")
 
