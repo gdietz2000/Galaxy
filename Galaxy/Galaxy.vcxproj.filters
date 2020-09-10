@@ -40,6 +40,8 @@
     <ClInclude Include="src\gxpch.h" />
     <ClInclude Include="src\Galaxy\Core\Window.h" />
     <ClInclude Include="src\Platform\WindowsWindow.h" />
+    <ClInclude Include="src\Galaxy\Core\Layer.h" />
+    <ClInclude Include="src\Galaxy\Core\LayerStack.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Galaxy\Core\Application.cpp">
@@ -50,5 +52,7 @@
     </ClCompile>
     <ClCompile Include="src\gxpch.cpp" />
     <ClCompile Include="src\Platform\WindowsWindow.cpp" />
+    <ClCompile Include="src\Galaxy\Core\Layer.cpp" />
+    <ClCompile Include="src\Galaxy\Core\LayerStack.cpp" />
   </ItemGroup>
 </Project>

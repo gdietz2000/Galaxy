@@ -2,6 +2,8 @@
 #include "WindowsWindow.h"
 
 #include "Galaxy/Events/ApplicationEvent.h"
+#include "Galaxy/Events/KeyEvent.h"
+#include "Galaxy/Events/MouseEvent.h"
 
 namespace Galaxy
 {
@@ -33,6 +35,20 @@ namespace Galaxy
 			m_Data.EventCallback(e);
 			PostQuitMessage(0);
 			return 0;
+		}
+		case WM_KEYDOWN:
+		{
+			KeyPressedEvent e(wParam, lParam);
+			m_Data.EventCallback(e);
+			return 0;
+		}
+		case WM_SIZE:
+		{
+			m_Data.width = LOWORD(lParam);
+			m_Data.height = HIWORD(lParam);
+			WindowResizeEvent e(m_Data.width, m_Data.height);
+			if (m_Data.EventCallback) m_Data.EventCallback(e);
+			break;
 		}
 		default:
 			return DefWindowProc(hWnd, msg, wParam, lParam);

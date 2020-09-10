@@ -1,8 +1,6 @@
 #include "gxpch.h"
 
 #include "Application.h"
-#include "Galaxy/Events/ApplicationEvent.h"
-#include "Core.h"
 
 namespace Galaxy 
 {
@@ -27,6 +25,9 @@ namespace Galaxy
 	{
 		while (m_Running)
 		{
+			for (Layer* layer : m_LayerStack)
+				layer->OnUpdate();
+
 			m_Window->OnUpdate();
 		}
 	}
@@ -35,11 +36,37 @@ namespace Galaxy
 	{
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(GX_BIND(Application::OnWindowClose));
+		dispatcher.Dispatch<WindowResizeEvent>(GX_BIND(Application::OnWindowResize));
+
+		for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it)
+		{
+			if (e.m_Handled)
+				break;
+			(*it)->OnEvent(e);
+		}
 	}
 
-	bool Application::OnWindowClose(Event& e)
+	void Application::PushLayer(Layer* layer)
+	{
+		m_LayerStack.PushLayer(layer);
+		layer->OnAttach();
+	}
+
+	void Application::PushOverlay(Layer* overlay)
+	{
+		m_LayerStack.PushOverlay(overlay);
+		overlay->OnAttach();
+	}
+
+	bool Application::OnWindowClose(WindowCloseEvent& e)
 	{
 		m_Running = false;
+		return false;
+	}
+
+	bool Application::OnWindowResize(WindowResizeEvent& e)
+	{
+		GX_CORE_INFO(e.ToString());
 		return false;
 	}
 }
