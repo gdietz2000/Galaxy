@@ -1,5 +1,4 @@
-#include <iostream>
-
+#include "gxpch.h"
 #include "Galaxy.h"
 
 class SandboxApp : public Galaxy::Application

@@ -11,6 +11,8 @@
 #include <array>
 #include <vector>
 
+#include "Galaxy/Core/Log.h"
+
 #include <unordered_map>
 #include <unordered_set>
 

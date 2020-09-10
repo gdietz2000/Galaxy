@@ -1,7 +1,8 @@
 #pragma once
 
+#include "gxpch.h"
+
 #include "Application.h"
-#include "Log.h"
 #include "Galaxy/Events/Event.h"
 #include "Galaxy/Events/ApplicationEvent.h"
 
