@@ -96,11 +96,13 @@
     <ClInclude Include="src\Galaxy\Core\Core.h" />
     <ClInclude Include="src\Galaxy\Core\EntryPoint.h" />
     <ClInclude Include="src\Galaxy\Core\Log.h" />
+    <ClInclude Include="src\Galaxy\Core\Window.h" />
     <ClInclude Include="src\Galaxy\Events\ApplicationEvent.h" />
     <ClInclude Include="src\Galaxy\Events\Event.h" />
     <ClInclude Include="src\Galaxy\Events\KeyEvent.h" />
     <ClInclude Include="src\Galaxy\Events\MouseEvent.h" />
     <ClInclude Include="src\gxpch.h" />
+    <ClInclude Include="src\Platform\WindowsWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Galaxy\Core\Application.cpp" />
@@ -108,6 +110,7 @@
     <ClCompile Include="src\gxpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\Platform\WindowsWindow.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

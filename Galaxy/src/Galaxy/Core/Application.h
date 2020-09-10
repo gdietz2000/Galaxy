@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Core.h"
+#include "Window.h"
 
 namespace Galaxy
 {
@@ -9,7 +11,20 @@ namespace Galaxy
 		Application();
 		virtual ~Application();
 
-		void Run();
+		virtual void Run();
+
+		void OnEvent(Event& e);
+
+		static inline Application* Get() { return s_Instance; }
+		inline Window& GetWindow() { return *m_Window; }
+	private:
+
+		bool OnWindowClose(Event& e);
+		
+
+		Scope<Window> m_Window;
+		bool m_Running = true;
+		static Application* s_Instance;
 	};
 
 	Application* CreateApplication();

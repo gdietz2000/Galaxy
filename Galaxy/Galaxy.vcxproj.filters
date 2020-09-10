@@ -38,6 +38,8 @@
       <Filter>Galaxy\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\gxpch.h" />
+    <ClInclude Include="src\Galaxy\Core\Window.h" />
+    <ClInclude Include="src\Platform\WindowsWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Galaxy\Core\Application.cpp">
@@ -47,5 +49,6 @@
       <Filter>Galaxy\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\gxpch.cpp" />
+    <ClCompile Include="src\Platform\WindowsWindow.cpp" />
   </ItemGroup>
 </Project>

@@ -1,8 +1,7 @@
 #pragma once
-#include "Galaxy/Core/Core.h"
+#include "gxpch.h"
 
-#include <string>
-#include <functional>
+#include "Galaxy/Core/Core.h"
 
 namespace Galaxy
 {
