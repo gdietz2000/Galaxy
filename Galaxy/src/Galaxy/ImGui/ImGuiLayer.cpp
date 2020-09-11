@@ -64,7 +64,7 @@ namespace Galaxy
 
 		ImGuiIO& io = ImGui::GetIO();
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 
@@ -93,16 +93,6 @@ namespace Galaxy
 
 	void ImGuiLayer::OnImGuiRender()
 	{
-		ImGui::Begin("Settings");
-
-		float color[4] = { 0,0,0,0 };
-		ImGui::ColorPicker4("Colors", color);
-
-		ImGui::End();
-
-		static bool show = true;
-		ImGui::ShowDemoWindow(&show);
-
 		float clearColor[4] = { 0.0f,1.0f,1.0f,1.0f };
 		context->ClearRenderTargetView(rtv, clearColor);
 
@@ -138,12 +128,8 @@ namespace Galaxy
 
 		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 		{
-			ID3D11DeviceContext* temp;
-			device->GetImmediateContext(&temp);
 			ImGui::UpdatePlatformWindows();
 			ImGui::RenderPlatformWindowsDefault();
-			context = temp;
-			temp->Release();
 		}
 
 		swap->Present(0, 0);

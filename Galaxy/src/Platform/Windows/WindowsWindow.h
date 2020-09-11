@@ -1,6 +1,5 @@
 #pragma once
 #include "Galaxy/Core/Window.h"
-
 namespace Galaxy
 {
 	class WindowsWindow : public Window

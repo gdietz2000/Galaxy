@@ -1,5 +1,6 @@
 #include "gxpch.h"
 #include "Galaxy.h"
+#include "ImGui/imgui.h"
 #include "Galaxy/Events/ApplicationEvent.h"
 
 class ExampleLayer : public Galaxy::Layer
@@ -10,12 +11,12 @@ public:
 
 	void OnUpdate() override 
 	{
-		//GX_INFO("ExampleLayer::Update");
+
 	}
 
-	void OnEvent(Galaxy::Event& e) override
+	void OnImGuiRender() override
 	{
-		//GX_TRACE("{0}", e.ToString());
+
 	}
 };
 

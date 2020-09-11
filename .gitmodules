@@ -4,3 +4,6 @@
 [submodule "Galaxy/vendor/ImGui"]
 	path = Galaxy/vendor/ImGui
 	url = https://github.com/gdietz2000/imgui.git
+[submodule "Galaxy/vendor/glm"]
+	path = Galaxy/vendor/glm
+	url = https://github.com/g-truc/glm.git
