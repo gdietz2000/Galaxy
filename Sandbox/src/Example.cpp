@@ -16,7 +16,12 @@ public:
 
 	void OnImGuiRender() override
 	{
+		ImGui::Begin("Template");
 
+		ImGui::End();
+
+		static bool show = true;
+		ImGui::ShowDemoWindow(&show);
 	}
 };
 
