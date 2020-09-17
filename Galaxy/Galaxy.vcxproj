@@ -104,8 +104,8 @@
     <ClInclude Include="src\Galaxy\Events\KeyEvent.h" />
     <ClInclude Include="src\Galaxy\Events\MouseEvent.h" />
     <ClInclude Include="src\Galaxy\ImGui\ImGuiLayer.h" />
-    <ClInclude Include="src\Galaxy\Renderer\Renderer.h" />
-    <ClInclude Include="src\Galaxy\Renderer\RendererType.h" />
+    <ClInclude Include="src\Galaxy\Renderer\GraphicContext.h" />
+    <ClInclude Include="src\Platform\Windows\DirectXContext.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\gxpch.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
@@ -524,6 +524,7 @@
     <ClCompile Include="src\Galaxy\Core\Log.cpp" />
     <ClCompile Include="src\Galaxy\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Galaxy\ImGui\ImGuiLayer.cpp" />
+    <ClCompile Include="src\Platform\Windows\DirectXContext.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\gxpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

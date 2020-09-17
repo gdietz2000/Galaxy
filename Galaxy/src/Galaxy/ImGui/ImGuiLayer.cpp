@@ -6,13 +6,14 @@
 #include "examples/imgui_impl_dx11.h"
 
 #include "Galaxy/Core/Application.h"
+#include "Platform/Windows/DirectXContext.h"
 
 namespace Galaxy
 {
 	ImGuiLayer::ImGuiLayer()
 		: Layer("ImGuiLayer")
 	{
-		D3D_FEATURE_LEVEL dx11 = D3D_FEATURE_LEVEL_11_0;
+		/*D3D_FEATURE_LEVEL dx11 = D3D_FEATURE_LEVEL_11_0;
 
 		RECT rect;
 		GetClientRect((HWND)Application::Get().GetWindow().GetNativeWindow(), &rect);
@@ -45,58 +46,39 @@ namespace Galaxy
 		port.TopLeftX = port.TopLeftY = 0;
 		port.MinDepth = 0; port.MaxDepth = 1;
 
-		context->RSSetViewports(1, &port);
+		context->RSSetViewports(1, &port);*/
 	}
 
 	ImGuiLayer::~ImGuiLayer()
 	{
+		ImGui_ImplDX11_InvalidateDeviceObjects();
+		ImGui_ImplDX11_Shutdown();
+		ImGui_ImplWin32_Shutdown();
+
 		OnDetach();
-		device->Release();
-		context->Release();
-		swap->Release();
-		rtv->Release();
 	}
 
 	void ImGuiLayer::OnAttach()
 	{
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
-
-		ImGuiIO& io = ImGui::GetIO();
-		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
-		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
-
 		ImGui::StyleColorsDark();
 
-		ImGuiStyle& style = ImGui::GetStyle();
-		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-		{
-			style.WindowRounding = 0.0f;
-			style.Colors[ImGuiCol_WindowBg].w = 1.0f;
-		}
-
-		HWND window = (HWND)Application::Get().GetWindow().GetNativeWindow();
-		ImGui_ImplWin32_Init(window);
-		ImGui_ImplDX11_Init(device, context);
 		ImGui_ImplDX11_CreateDeviceObjects();
 	}
 
 	void ImGuiLayer::OnDetach()
 	{
-		ImGui_ImplDX11_InvalidateDeviceObjects();
-		ImGui_ImplDX11_Shutdown();
-		ImGui_ImplWin32_Shutdown();
 		ImGui::DestroyContext();
 	}
 
 	void ImGuiLayer::OnImGuiRender()
 	{
-		float clearColor[4] = { 0.0f,1.0f,1.0f,1.0f };
-		context->ClearRenderTargetView(rtv, clearColor);
+		//float clearColor[4] = { 0.0f,1.0f,1.0f,1.0f };
 
-		context->OMSetRenderTargets(1, &rtv, nullptr);
+		//auto graphics = (Graphics*)Application::Get().GetWindow().GetContext();
+		//graphics->m_Context->ClearRenderTargetView(graphics->m_RenderTargetView, clearColor);
+		//graphics->m_Context->OMSetRenderTargets(1, &graphics->m_RenderTargetView, nullptr);
 	}
 
 	void ImGuiLayer::OnEvent(Event& e)
@@ -118,21 +100,8 @@ namespace Galaxy
 
 	void ImGuiLayer::End()
 	{
-		ImGuiIO& io = ImGui::GetIO();
-		Application& app = Application::Get();
-		io.DisplaySize = ImVec2((float)app.GetWindow().GetWidth(), (float)app.GetWindow().GetHeight());
-
 		//Rendering
 		ImGui::Render();
 		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-
-		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-		{
-			ImGui::UpdatePlatformWindows();
-			ImGui::RenderPlatformWindowsDefault();
-		}
-
-		swap->Present(0, 0);
-
 	}
 }

@@ -6,12 +6,17 @@
 #include "Galaxy/Events/MouseEvent.h"
 
 #include "examples/imgui_impl_win32.h"
+#include "examples/imgui_impl_dx11.h"
+#include "Platform/Windows/DirectXContext.h"
 
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 namespace Galaxy
 {
+
 	WindowsWindow::WindowData WindowsWindow::m_Data;
+
+	GraphicsContext* WindowsWindow::m_Context = nullptr;
 
 	Window* Window::Create(const WindowProps& props)
 	{
@@ -111,8 +116,26 @@ namespace Galaxy
 		//Window Resize
 		case WM_SIZE:
 		{
-			m_Data.width = LOWORD(lParam);
-			m_Data.height = HIWORD(lParam);
+			//Needed for ImGui Resizing-----------------------
+			UINT width = LOWORD(lParam);
+			UINT height = HIWORD(lParam);
+
+			//auto& graphics = *(Graphics*)m_Context->Get();
+
+			//graphics.m_RenderTargetView->Release();
+
+			//graphics.m_SwapChain->ResizeBuffers(1, width, height, DXGI_FORMAT_R8G8B8A8_UNORM, 0);
+
+			//ID3D11Resource* backbuffer;
+			//HRESULT hr = graphics.m_SwapChain->GetBuffer(0, __uuidof(backbuffer), (void**)&backbuffer);
+			//hr = graphics.m_Device->CreateRenderTargetView(backbuffer, NULL, &graphics.m_RenderTargetView);
+
+			//backbuffer->Release();
+			//------------------------------------------------
+
+			m_Data.width = width;
+			m_Data.height = height;
+
 			WindowResizeEvent e(m_Data.width, m_Data.height);
 			if (m_Data.EventCallback) m_Data.EventCallback(e);
 			break;
@@ -164,26 +187,44 @@ namespace Galaxy
 			__debugbreak();
 		}
 
+		m_Context = new DirectXContext(&m_Window);
+		m_Context->Init();
+
+		auto graphics = *(Graphics*)m_Context->Get();
+
+		IMGUI_CHECKVERSION();
+		ImGui::CreateContext();
+		ImGui::StyleColorsDark();
+
+		ImGui_ImplWin32_Init(m_Window);
+		ImGui_ImplDX11_Init(graphics.m_Device, graphics.m_Context);
+
 		ShowWindow(m_Window, SW_SHOW);
 		UpdateWindow(m_Window);
 	}
 
 	void WindowsWindow::Shutdown()
 	{
-	
+		delete m_Context;
 	}
 
 	void WindowsWindow::OnUpdate()
 	{
-
 		MSG msg;
-
 
 		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 		{
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
+
+		m_Context->SwapBuffers();
+
+		auto graphics = *(Graphics*)m_Context->Get();
+
+		float color[] = { 0.0f,1.0f,1.0f,1.0f };
+
+		graphics.m_Context->ClearRenderTargetView(graphics.m_RenderTargetView, color);
 	}
 
 

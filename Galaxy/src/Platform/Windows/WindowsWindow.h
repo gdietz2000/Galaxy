@@ -1,5 +1,6 @@
 #pragma once
 #include "Galaxy/Core/Window.h"
+#include "Galaxy/Renderer/GraphicContext.h"
 namespace Galaxy
 {
 	class WindowsWindow : public Window
@@ -18,6 +19,7 @@ namespace Galaxy
 		bool IsVSync() const override;
 
 		inline virtual void* GetNativeWindow() const { return m_Window; }
+		inline virtual void* GetContext() const { return m_Context; }
 	private:
 		void Init(const WindowProps& props);
 		void Shutdown();
@@ -25,6 +27,7 @@ namespace Galaxy
 		static LRESULT CALLBACK WindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 		HWND m_Window;
+		static GraphicsContext* m_Context;
 
 		struct WindowData
 		{

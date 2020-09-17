@@ -87,9 +87,6 @@
     <ClInclude Include="src\Galaxy\ImGui\ImGuiLayer.h">
       <Filter>src\Galaxy\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="src\Galaxy\Renderer\Renderer.h">
-      <Filter>src\Galaxy\Renderer</Filter>
-    </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
       <Filter>src\Platform\Windows</Filter>
     </ClInclude>
@@ -1320,7 +1317,8 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Galaxy\Renderer\RendererType.h" />
+    <ClInclude Include="src\Galaxy\Renderer\GraphicContext.h" />
+    <ClInclude Include="src\Platform\Windows\DirectXContext.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Galaxy\Core\Application.cpp">
@@ -1347,5 +1345,6 @@
     <ClCompile Include="src\gxpch.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\Windows\DirectXContext.cpp" />
   </ItemGroup>
 </Project>

@@ -31,14 +31,6 @@ namespace Galaxy
 		void Begin();
 		void End();
 	private:
-	
-
-		ID3D11Device* device = nullptr;
-		ID3D11DeviceContext* context = nullptr;
-		IDXGISwapChain* swap = nullptr;
-		ID3D11RenderTargetView* rtv = nullptr;
-		D3D11_VIEWPORT port;
-
 		bool m_BlockEvents = true;
 	};
 }
