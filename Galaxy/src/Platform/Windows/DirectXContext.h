@@ -12,14 +12,6 @@
 
 namespace Galaxy 
 {
-	struct Graphics 
-	{
-		ID3D11Device* m_Device;
-		ID3D11DeviceContext* m_Context;
-		IDXGISwapChain* m_SwapChain;
-		ID3D11RenderTargetView* m_RenderTargetView;
-	};
-
 	class DirectXContext : public GraphicsContext
 	{
 	public:
@@ -29,10 +21,16 @@ namespace Galaxy
 		virtual void Init() override;
 		virtual void SwapBuffers() override;
 
-		virtual void* Get() override;
+		inline Microsoft::WRL::ComPtr<ID3D11Device>& GetDevice() { return m_Device; }
+		inline Microsoft::WRL::ComPtr<ID3D11DeviceContext>& GetContext() { return m_Context; }
+		inline Microsoft::WRL::ComPtr<IDXGISwapChain>& GetSwapChain() { return m_SwapChain; }
+		inline Microsoft::WRL::ComPtr<ID3D11RenderTargetView>& GetRenderTargetView() { return m_RenderTargetView; }
 	private:
 		HWND* windowHandle;
 
-		Graphics m_Gfx;
+		Microsoft::WRL::ComPtr<ID3D11Device> m_Device;
+		Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_Context;
+		Microsoft::WRL::ComPtr<IDXGISwapChain> m_SwapChain;
+		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_RenderTargetView;
 	};
 }

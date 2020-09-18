@@ -10,18 +10,19 @@ namespace Galaxy
 	DirectXContext::DirectXContext(HWND* handle)
 	{
 		windowHandle = handle;
-		m_Gfx.m_Device = nullptr;
-		m_Gfx.m_Context = nullptr;
-		m_Gfx.m_SwapChain = nullptr;
+		m_Device = nullptr;
+		m_Context = nullptr;
+		m_SwapChain = nullptr;
+		m_RenderTargetView = nullptr;
 	}
 
 	DirectXContext::~DirectXContext()
 	{
-		m_Gfx.m_SwapChain->Release();
-		m_Gfx.m_RenderTargetView->Release();
+		//if (m_SwapChain) m_SwapChain->Release();
+		//if (m_RenderTargetView) m_RenderTargetView->Release();
 
-		m_Gfx.m_Context->Release();
-		m_Gfx.m_Device->Release();
+		//if (m_Context) m_Context->Release();
+		//if (m_Device) m_Device->Release();
 	}
 
 	void DirectXContext::Init()
@@ -48,28 +49,26 @@ namespace Galaxy
 		HRESULT hr;
 
 #ifdef _DEBUG
-		hr = D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, NULL, D3D11_CREATE_DEVICE_DEBUG, &dx11, 1, D3D11_SDK_VERSION, &desc, &m_Gfx.m_SwapChain, &m_Gfx.m_Device, nullptr, &m_Gfx.m_Context);
+		hr = D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, NULL, D3D11_CREATE_DEVICE_DEBUG, &dx11, 1, D3D11_SDK_VERSION, &desc, &m_SwapChain, &m_Device, nullptr, &m_Context);
 #else
-		hr = D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, NULL, NULL, &dx11, 1, D3D11_SDK_VERSION, &desc, &m_Gfx.m_SwapChain, &m_Gfx.m_Device, nullptr, &m_Gfx.m_Context);
+		hr = D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, NULL, NULL, &dx11, 1, D3D11_SDK_VERSION, &desc, &m_SwapChain, &m_Device, nullptr, &m_Context);
 #endif
 		assert(!FAILED(hr));
 
 		ID3D11Resource* backbuffer;
-		hr = m_Gfx.m_SwapChain->GetBuffer(0, __uuidof(backbuffer), (void**)&backbuffer);
-		hr = m_Gfx.m_Device->CreateRenderTargetView(backbuffer, NULL, &m_Gfx.m_RenderTargetView);
+		hr = m_SwapChain->GetBuffer(0, __uuidof(backbuffer), (void**)&backbuffer);
+		hr = m_Device->CreateRenderTargetView(backbuffer, NULL, &m_RenderTargetView);
 
 		backbuffer->Release();
 
-		m_Gfx.m_Context->OMSetRenderTargets(1, &m_Gfx.m_RenderTargetView, nullptr);
+		ID3D11RenderTargetView* views = { m_RenderTargetView.Get() };
+
+		m_Context->OMSetRenderTargets(1, &views, nullptr);
 	}
 
 	void DirectXContext::SwapBuffers()
 	{
 		bool vSync = Application::Get().GetWindow().IsVSync();
-		m_Gfx.m_SwapChain->Present(vSync, 0);
-	}
-
-	void* DirectXContext::Get() {
-		return (void*)&m_Gfx;
+		m_SwapChain->Present(vSync, 0);
 	}
 }

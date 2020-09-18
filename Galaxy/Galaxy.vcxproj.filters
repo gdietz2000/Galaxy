@@ -1319,6 +1319,10 @@
     </ClInclude>
     <ClInclude Include="src\Galaxy\Renderer\GraphicContext.h" />
     <ClInclude Include="src\Platform\Windows\DirectXContext.h" />
+    <ClInclude Include="src\Galaxy\Renderer\Renderer.h" />
+    <ClInclude Include="src\Galaxy\Renderer\RendererAPI.h" />
+    <ClInclude Include="src\Galaxy\Renderer\RenderCommand.h" />
+    <ClInclude Include="src\Platform\Windows\DirectXRendererAPI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Galaxy\Core\Application.cpp">
@@ -1346,5 +1350,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\DirectXContext.cpp" />
+    <ClCompile Include="src\Galaxy\Renderer\RendererAPI.cpp" />
+    <ClCompile Include="src\Galaxy\Renderer\RenderCommand.cpp" />
+    <ClCompile Include="src\Platform\Windows\DirectXRendererAPI.cpp" />
+    <ClCompile Include="src\Galaxy\Renderer\Renderer.cpp" />
   </ItemGroup>
 </Project>

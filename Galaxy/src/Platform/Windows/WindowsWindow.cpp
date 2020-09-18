@@ -16,7 +16,7 @@ namespace Galaxy
 
 	WindowsWindow::WindowData WindowsWindow::m_Data;
 
-	GraphicsContext* WindowsWindow::m_Context = nullptr;
+	DirectXContext* WindowsWindow::m_Context = nullptr;
 
 	Window* Window::Create(const WindowProps& props)
 	{
@@ -116,22 +116,23 @@ namespace Galaxy
 		//Window Resize
 		case WM_SIZE:
 		{
-			//Needed for ImGui Resizing-----------------------
+			//Resizing the frame buffer after risizing the window---
 			UINT width = LOWORD(lParam);
 			UINT height = HIWORD(lParam);
 
-			//auto& graphics = *(Graphics*)m_Context->Get();
+			m_Context->GetRenderTargetView().Reset();
+			m_Context->GetSwapChain()->ResizeBuffers(1, width, height, DXGI_FORMAT_R8G8B8A8_UNORM, 0);
 
-			//graphics.m_RenderTargetView->Release();
+			ID3D11Resource* backbuffer;
+			HRESULT hr = m_Context->GetSwapChain()->GetBuffer(0, __uuidof(backbuffer), (void**)&backbuffer);
+			hr = m_Context->GetDevice()->CreateRenderTargetView(backbuffer, NULL, m_Context->GetRenderTargetView().GetAddressOf());
 
-			//graphics.m_SwapChain->ResizeBuffers(1, width, height, DXGI_FORMAT_R8G8B8A8_UNORM, 0);
-
-			//ID3D11Resource* backbuffer;
-			//HRESULT hr = graphics.m_SwapChain->GetBuffer(0, __uuidof(backbuffer), (void**)&backbuffer);
-			//hr = graphics.m_Device->CreateRenderTargetView(backbuffer, NULL, &graphics.m_RenderTargetView);
-
-			//backbuffer->Release();
+			backbuffer->Release();
 			//------------------------------------------------
+
+			ID3D11RenderTargetView* views = { m_Context->GetRenderTargetView().Get() };
+
+			m_Context->GetContext()->OMSetRenderTargets(1, &views, nullptr);
 
 			m_Data.width = width;
 			m_Data.height = height;
@@ -190,14 +191,12 @@ namespace Galaxy
 		m_Context = new DirectXContext(&m_Window);
 		m_Context->Init();
 
-		auto graphics = *(Graphics*)m_Context->Get();
-
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
 		ImGui::StyleColorsDark();
 
 		ImGui_ImplWin32_Init(m_Window);
-		ImGui_ImplDX11_Init(graphics.m_Device, graphics.m_Context);
+		ImGui_ImplDX11_Init(m_Context->GetDevice().Get(), m_Context->GetContext().Get());
 
 		ShowWindow(m_Window, SW_SHOW);
 		UpdateWindow(m_Window);
@@ -219,12 +218,6 @@ namespace Galaxy
 		}
 
 		m_Context->SwapBuffers();
-
-		auto graphics = *(Graphics*)m_Context->Get();
-
-		float color[] = { 0.0f,1.0f,1.0f,1.0f };
-
-		graphics.m_Context->ClearRenderTargetView(graphics.m_RenderTargetView, color);
 	}
 
 

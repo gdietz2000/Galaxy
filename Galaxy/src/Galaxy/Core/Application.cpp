@@ -1,7 +1,7 @@
 #include "gxpch.h"
 
 #include "Application.h"
-
+#include "Galaxy/Renderer/Renderer.h"
 #include "Galaxy/ImGui/ImGuiLayer.h"
 
 namespace Galaxy 
@@ -16,6 +16,8 @@ namespace Galaxy
 		GX_CORE_INFO("Application Created");
 		m_Window = Scope<Window>(Window::Create());
 		m_Window->SetEventCallback(GX_BIND(Application::OnEvent));
+
+		Renderer::Init();
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushLayer(m_ImGuiLayer);

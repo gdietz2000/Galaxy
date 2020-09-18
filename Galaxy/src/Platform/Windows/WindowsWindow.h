@@ -1,10 +1,12 @@
 #pragma once
 #include "Galaxy/Core/Window.h"
-#include "Galaxy/Renderer/GraphicContext.h"
+#include "Galaxy/Renderer/Renderer.h"
+#include "Platform/Windows/DirectXContext.h"
 namespace Galaxy
 {
 	class WindowsWindow : public Window
 	{
+		friend class Renderer;
 	public:
 		WindowsWindow(const WindowProps& props);
 		virtual ~WindowsWindow();
@@ -27,7 +29,7 @@ namespace Galaxy
 		static LRESULT CALLBACK WindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 		HWND m_Window;
-		static GraphicsContext* m_Context;
+		static DirectXContext* m_Context;
 
 		struct WindowData
 		{

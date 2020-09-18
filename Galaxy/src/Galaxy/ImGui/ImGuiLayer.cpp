@@ -74,11 +74,7 @@ namespace Galaxy
 
 	void ImGuiLayer::OnImGuiRender()
 	{
-		//float clearColor[4] = { 0.0f,1.0f,1.0f,1.0f };
 
-		//auto graphics = (Graphics*)Application::Get().GetWindow().GetContext();
-		//graphics->m_Context->ClearRenderTargetView(graphics->m_RenderTargetView, clearColor);
-		//graphics->m_Context->OMSetRenderTargets(1, &graphics->m_RenderTargetView, nullptr);
 	}
 
 	void ImGuiLayer::OnEvent(Event& e)
