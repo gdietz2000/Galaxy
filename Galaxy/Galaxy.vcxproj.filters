@@ -1344,6 +1344,8 @@
     <ClInclude Include="src\Galaxy\Core\Timestep.h" />
     <ClInclude Include="src\Galaxy\Renderer\Renderer3D.h" />
     <ClInclude Include="vendor\DirectX\DDSTextureLoader.h" />
+    <ClInclude Include="src\Galaxy\Renderer\Buffer.h" />
+    <ClInclude Include="src\Platform\Windows\DirectXBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Galaxy\Core\Application.cpp">
@@ -1387,5 +1389,7 @@
     </ClCompile>
     <ClCompile Include="src\Galaxy\Renderer\Renderer3D.cpp" />
     <ClCompile Include="vendor\DirectX\DDSTextureLoader.cpp" />
+    <ClCompile Include="src\Galaxy\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Platform\Windows\DirectXBuffer.cpp" />
   </ItemGroup>
 </Project>

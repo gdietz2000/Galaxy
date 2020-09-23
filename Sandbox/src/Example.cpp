@@ -40,7 +40,7 @@ private:
 class SandboxApp : public Galaxy::Application
 {
 public:
-	SandboxApp()
+	SandboxApp() : Application("Supernova")
 	{
 		PushLayer(new ExampleLayer());
 	}

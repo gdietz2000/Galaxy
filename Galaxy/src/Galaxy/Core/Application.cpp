@@ -9,13 +9,13 @@ namespace Galaxy
 {
 	Application* Application::s_Instance;
 
-	Application::Application()
+	Application::Application(const std::string& title, uint32_t width, uint32_t height)
 	{
 		if (!s_Instance)
 			s_Instance = this;
 
 		GX_CORE_INFO("Application Created");
-		m_Window = Scope<Window>(Window::Create());
+		m_Window = Scope<Window>(Window::Create({title, width, height}));
 		m_Window->SetEventCallback(GX_BIND(Application::OnEvent));
 
 		Renderer::Init();

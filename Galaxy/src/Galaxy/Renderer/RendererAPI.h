@@ -4,6 +4,7 @@ namespace Galaxy
 {
 	class RendererAPI
 	{
+	public:
 		enum class API
 		{
 			None = 0,

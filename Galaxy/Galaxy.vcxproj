@@ -105,11 +105,13 @@
     <ClInclude Include="src\Galaxy\Events\KeyEvent.h" />
     <ClInclude Include="src\Galaxy\Events\MouseEvent.h" />
     <ClInclude Include="src\Galaxy\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="src\Galaxy\Renderer\Buffer.h" />
     <ClInclude Include="src\Galaxy\Renderer\GraphicContext.h" />
     <ClInclude Include="src\Galaxy\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Galaxy\Renderer\Renderer.h" />
     <ClInclude Include="src\Galaxy\Renderer\Renderer3D.h" />
     <ClInclude Include="src\Galaxy\Renderer\RendererAPI.h" />
+    <ClInclude Include="src\Platform\Windows\DirectXBuffer.h" />
     <ClInclude Include="src\Platform\Windows\DirectXContext.h" />
     <ClInclude Include="src\Platform\Windows\DirectXRendererAPI.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
@@ -531,10 +533,12 @@
     <ClCompile Include="src\Galaxy\Core\Log.cpp" />
     <ClCompile Include="src\Galaxy\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Galaxy\ImGui\ImGuiLayer.cpp" />
+    <ClCompile Include="src\Galaxy\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Galaxy\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Galaxy\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Galaxy\Renderer\Renderer3D.cpp" />
     <ClCompile Include="src\Galaxy\Renderer\RendererAPI.cpp" />
+    <ClCompile Include="src\Platform\Windows\DirectXBuffer.cpp" />
     <ClCompile Include="src\Platform\Windows\DirectXContext.cpp" />
     <ClCompile Include="src\Platform\Windows\DirectXRendererAPI.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />

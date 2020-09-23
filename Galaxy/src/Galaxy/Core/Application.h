@@ -16,7 +16,7 @@ namespace Galaxy
 	class Application 
 	{
 	public:
-		Application();
+		Application(const std::string& title = "Galaxy Engine", uint32_t width = 1280, uint32_t height = 720);
 		virtual ~Application();
 
 		virtual void Run();

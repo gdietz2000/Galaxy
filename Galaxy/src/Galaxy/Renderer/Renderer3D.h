@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Platform/Windows/DirectXContext.h"
+#include "Buffer.h"
 #include "wrl.h"
 
 namespace Galaxy
@@ -21,5 +22,6 @@ namespace Galaxy
 		static Microsoft::WRL::ComPtr<ID3D11PixelShader> m_PixelShader;
 
 		static Microsoft::WRL::ComPtr<ID3D11Buffer> m_ConstantBuffer;
+		static Ref<ConstantBuffer> squareColor;
 	};
 }
