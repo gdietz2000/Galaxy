@@ -98,6 +98,7 @@
     <ClInclude Include="src\Galaxy\Core\Layer.h" />
     <ClInclude Include="src\Galaxy\Core\LayerStack.h" />
     <ClInclude Include="src\Galaxy\Core\Log.h" />
+    <ClInclude Include="src\Galaxy\Core\Timestep.h" />
     <ClInclude Include="src\Galaxy\Core\Window.h" />
     <ClInclude Include="src\Galaxy\Events\ApplicationEvent.h" />
     <ClInclude Include="src\Galaxy\Events\Event.h" />

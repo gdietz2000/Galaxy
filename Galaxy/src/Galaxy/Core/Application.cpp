@@ -33,17 +33,21 @@ namespace Galaxy
 		while (m_Running)
 		{
 
+			auto now = std::chrono::high_resolution_clock::now();
+			Timestep ts = std::chrono::duration<float>(now - lastUpdate).count();
+			lastUpdate = now;
+
 			for (Layer* layer : m_LayerStack)
-				layer->OnUpdate();
+				layer->OnUpdate(ts);
 
 			m_ImGuiLayer->Begin();
 
 			for (Layer* layer : m_LayerStack)
-				layer->OnImGuiRender();
+				layer->OnImGuiRender(ts);
 
 			m_ImGuiLayer->End();
 
-			m_Window->OnUpdate();
+			m_Window->OnUpdate(ts);
 		}
 	}
 

@@ -72,7 +72,7 @@ namespace Galaxy
 		ImGui::DestroyContext();
 	}
 
-	void ImGuiLayer::OnImGuiRender()
+	void ImGuiLayer::OnImGuiRender(Timestep ts)
 	{
 
 	}

@@ -1323,6 +1323,7 @@
     <ClInclude Include="src\Galaxy\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Galaxy\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Platform\Windows\DirectXRendererAPI.h" />
+    <ClInclude Include="src\Galaxy\Core\Timestep.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Galaxy\Core\Application.cpp">

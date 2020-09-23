@@ -11,7 +11,7 @@ namespace Galaxy
 		WindowsWindow(const WindowProps& props);
 		virtual ~WindowsWindow();
 
-		void OnUpdate() override;
+		void OnUpdate(Timestep ts) override;
 
 		inline uint32_t GetWidth() const { return m_Data.width; }
 		inline uint32_t GetHeight() const { return m_Data.height; }

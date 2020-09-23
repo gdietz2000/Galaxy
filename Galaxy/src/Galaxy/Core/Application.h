@@ -2,10 +2,14 @@
 
 #include "Core.h"
 
+#include "Timestep.h"
+
 #include "Window.h"
 #include "LayerStack.h"
 #include "Galaxy/ImGui/ImGuiLayer.h"
 #include "Galaxy/Events/ApplicationEvent.h"
+
+#include <chrono>
 
 namespace Galaxy
 {
@@ -28,6 +32,8 @@ namespace Galaxy
 		bool OnWindowClose(WindowCloseEvent& e);
 		bool OnWindowResize(WindowResizeEvent& e);
 		
+		float m_DeltaTime;
+		std::chrono::steady_clock::time_point lastUpdate;
 
 		Scope<Window> m_Window;
 		bool m_Running = true;

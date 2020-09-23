@@ -11,11 +11,15 @@ namespace Galaxy
 
 	void DirectXRendererAPI::SetClearColor(float color[4])
 	{
-		memcpy_s(m_Color, sizeof(m_Color) * 4, color, sizeof(color) * 4);
+		_r = color[0];
+		_g = color[1];
+		_b = color[2];
+		_a = color[3];
 	}
 
 	void DirectXRendererAPI::Clear()
 	{
+		float m_Color[] = { _r, _g, _b, _a };
 		m_Context->GetContext()->ClearRenderTargetView(m_Context->GetRenderTargetView().Get(), m_Color);
 	}
 }

@@ -2,6 +2,7 @@
 #include "gxpch.h"
 
 #include "Core.h"
+#include "Timestep.h"
 #include "Galaxy/Events/Event.h"
 
 namespace Galaxy
@@ -23,7 +24,7 @@ namespace Galaxy
 
 		virtual ~Window() {}
 
-		virtual void OnUpdate() = 0;
+		virtual void OnUpdate(Timestep ts) = 0;
 
 		virtual uint32_t GetWidth() const = 0;
 		virtual uint32_t GetHeight() const = 0;

@@ -207,7 +207,7 @@ namespace Galaxy
 		delete m_Context;
 	}
 
-	void WindowsWindow::OnUpdate()
+	void WindowsWindow::OnUpdate(Timestep ts)
 	{
 		MSG msg;
 

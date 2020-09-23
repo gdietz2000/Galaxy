@@ -10,7 +10,7 @@ public:
 	ExampleLayer()
 		: Layer("Example") {}
 
-	void OnUpdate() override 
+	void OnUpdate(Galaxy::Timestep ts) override 
 	{
 		float color[4] = { 0.0f,1.0f, 1.0f, 1.0f };
 		Galaxy::Renderer::SetClearColor(color);
@@ -18,9 +18,11 @@ public:
 		Galaxy::Renderer::Clear();
 	}
 
-	void OnImGuiRender() override
+	void OnImGuiRender(Galaxy::Timestep ts) override
 	{
-		ImGui::Begin("Template");
+		ImGui::Begin("Frames Per Second");
+
+		ImGui::Value("FPS", 1.0f / ts.GetSeconds());
 
 		ImGui::End();
 
