@@ -25,6 +25,7 @@ namespace Galaxy
 		inline Microsoft::WRL::ComPtr<ID3D11DeviceContext>& GetContext() { return m_Context; }
 		inline Microsoft::WRL::ComPtr<IDXGISwapChain>& GetSwapChain() { return m_SwapChain; }
 		inline Microsoft::WRL::ComPtr<ID3D11RenderTargetView>& GetRenderTargetView() { return m_RenderTargetView; }
+		inline D3D11_VIEWPORT& GetViewport() { return m_Viewport; }
 	private:
 		HWND* windowHandle;
 
@@ -32,5 +33,6 @@ namespace Galaxy
 		Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_Context;
 		Microsoft::WRL::ComPtr<IDXGISwapChain> m_SwapChain;
 		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_RenderTargetView;
+		D3D11_VIEWPORT m_Viewport;
 	};
 }

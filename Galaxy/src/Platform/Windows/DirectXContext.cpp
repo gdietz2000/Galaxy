@@ -46,6 +46,11 @@ namespace Galaxy
 		desc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 		desc.Windowed = true;
 
+		m_Viewport.Width = rect.right - rect.left;
+		m_Viewport.Height = rect.bottom - rect.top;
+		m_Viewport.TopLeftX = m_Viewport.TopLeftY = 0;
+		m_Viewport.MinDepth = 0; m_Viewport.MaxDepth = 1;
+
 		HRESULT hr;
 
 #ifdef _DEBUG
@@ -64,6 +69,7 @@ namespace Galaxy
 		ID3D11RenderTargetView* views = { m_RenderTargetView.Get() };
 
 		m_Context->OMSetRenderTargets(1, &views, nullptr);
+		m_Context->RSSetViewports(1, &m_Viewport);
 	}
 
 	void DirectXContext::SwapBuffers()

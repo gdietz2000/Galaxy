@@ -108,11 +108,13 @@
     <ClInclude Include="src\Galaxy\Renderer\GraphicContext.h" />
     <ClInclude Include="src\Galaxy\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Galaxy\Renderer\Renderer.h" />
+    <ClInclude Include="src\Galaxy\Renderer\Renderer3D.h" />
     <ClInclude Include="src\Galaxy\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Platform\Windows\DirectXContext.h" />
     <ClInclude Include="src\Platform\Windows\DirectXRendererAPI.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\gxpch.h" />
+    <ClInclude Include="vendor\DirectX\DDSTextureLoader.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_features.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_fixes.hpp" />
@@ -531,12 +533,17 @@
     <ClCompile Include="src\Galaxy\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Galaxy\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Galaxy\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Galaxy\Renderer\Renderer3D.cpp" />
     <ClCompile Include="src\Galaxy\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Platform\Windows\DirectXContext.cpp" />
     <ClCompile Include="src\Platform\Windows\DirectXRendererAPI.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\gxpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="vendor\DirectX\DDSTextureLoader.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -2,6 +2,7 @@
 
 #include "Application.h"
 #include "Galaxy/Renderer/Renderer.h"
+#include "Galaxy/Renderer/Renderer3D.h"
 #include "Galaxy/ImGui/ImGuiLayer.h"
 
 namespace Galaxy 
@@ -18,6 +19,7 @@ namespace Galaxy
 		m_Window->SetEventCallback(GX_BIND(Application::OnEvent));
 
 		Renderer::Init();
+		Renderer3D::Init();
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushLayer(m_ImGuiLayer);

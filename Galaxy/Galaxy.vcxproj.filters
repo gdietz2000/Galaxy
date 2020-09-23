@@ -1342,6 +1342,8 @@
     <ClInclude Include="src\Galaxy\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Platform\Windows\DirectXRendererAPI.h" />
     <ClInclude Include="src\Galaxy\Core\Timestep.h" />
+    <ClInclude Include="src\Galaxy\Renderer\Renderer3D.h" />
+    <ClInclude Include="vendor\DirectX\DDSTextureLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Galaxy\Core\Application.cpp">
@@ -1383,5 +1385,7 @@
     <ClCompile Include="src\gxpch.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Galaxy\Renderer\Renderer3D.cpp" />
+    <ClCompile Include="vendor\DirectX\DDSTextureLoader.cpp" />
   </ItemGroup>
 </Project>

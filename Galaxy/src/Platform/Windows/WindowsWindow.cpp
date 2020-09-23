@@ -127,6 +127,10 @@ namespace Galaxy
 			HRESULT hr = m_Context->GetSwapChain()->GetBuffer(0, __uuidof(backbuffer), (void**)&backbuffer);
 			hr = m_Context->GetDevice()->CreateRenderTargetView(backbuffer, NULL, m_Context->GetRenderTargetView().GetAddressOf());
 
+			D3D11_VIEWPORT& view = m_Context->GetViewport();
+			view.Width = width;
+			view.Height = height;
+
 			backbuffer->Release();
 			//------------------------------------------------
 
