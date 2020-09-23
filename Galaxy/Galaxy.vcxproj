@@ -105,9 +105,9 @@
     <ClInclude Include="src\Galaxy\Events\MouseEvent.h" />
     <ClInclude Include="src\Galaxy\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Galaxy\Renderer\GraphicContext.h" />
+    <ClInclude Include="src\Galaxy\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Galaxy\Renderer\Renderer.h" />
     <ClInclude Include="src\Galaxy\Renderer\RendererAPI.h" />
-    <ClInclude Include="src\Galaxy\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Platform\Windows\DirectXContext.h" />
     <ClInclude Include="src\Platform\Windows\DirectXRendererAPI.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />

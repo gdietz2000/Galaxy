@@ -87,6 +87,24 @@
     <ClInclude Include="src\Galaxy\ImGui\ImGuiLayer.h">
       <Filter>src\Galaxy\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="src\Galaxy\Renderer\GraphicContext.h">
+      <Filter>src\Galaxy\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Galaxy\Renderer\RenderCommand.h">
+      <Filter>src\Galaxy\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Galaxy\Renderer\Renderer.h">
+      <Filter>src\Galaxy\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Galaxy\Renderer\RendererAPI.h">
+      <Filter>src\Galaxy\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\DirectXContext.h">
+      <Filter>src\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\DirectXRendererAPI.h">
+      <Filter>src\Platform\Windows</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
       <Filter>src\Platform\Windows</Filter>
     </ClInclude>
@@ -1317,12 +1335,6 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Galaxy\Renderer\GraphicContext.h" />
-    <ClInclude Include="src\Platform\Windows\DirectXContext.h" />
-    <ClInclude Include="src\Galaxy\Renderer\Renderer.h" />
-    <ClInclude Include="src\Galaxy\Renderer\RendererAPI.h" />
-    <ClInclude Include="src\Galaxy\Renderer\RenderCommand.h" />
-    <ClInclude Include="src\Platform\Windows\DirectXRendererAPI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Galaxy\Core\Application.cpp">
@@ -1343,16 +1355,26 @@
     <ClCompile Include="src\Galaxy\ImGui\ImGuiLayer.cpp">
       <Filter>src\Galaxy\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="src\Galaxy\Renderer\RenderCommand.cpp">
+      <Filter>src\Galaxy\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Galaxy\Renderer\Renderer.cpp">
+      <Filter>src\Galaxy\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Galaxy\Renderer\RendererAPI.cpp">
+      <Filter>src\Galaxy\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\DirectXContext.cpp">
+      <Filter>src\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\DirectXRendererAPI.cpp">
+      <Filter>src\Platform\Windows</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\gxpch.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\Windows\DirectXContext.cpp" />
-    <ClCompile Include="src\Galaxy\Renderer\RendererAPI.cpp" />
-    <ClCompile Include="src\Galaxy\Renderer\RenderCommand.cpp" />
-    <ClCompile Include="src\Platform\Windows\DirectXRendererAPI.cpp" />
-    <ClCompile Include="src\Galaxy\Renderer\Renderer.cpp" />
   </ItemGroup>
 </Project>
