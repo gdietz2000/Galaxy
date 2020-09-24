@@ -1346,6 +1346,8 @@
     <ClInclude Include="vendor\DirectX\DDSTextureLoader.h" />
     <ClInclude Include="src\Galaxy\Renderer\Buffer.h" />
     <ClInclude Include="src\Platform\Windows\DirectXBuffer.h" />
+    <ClInclude Include="src\Galaxy\Renderer\Shader.h" />
+    <ClInclude Include="src\Platform\Windows\DirectXShader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Galaxy\Core\Application.cpp">
@@ -1391,5 +1393,7 @@
     <ClCompile Include="vendor\DirectX\DDSTextureLoader.cpp" />
     <ClCompile Include="src\Galaxy\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Platform\Windows\DirectXBuffer.cpp" />
+    <ClCompile Include="src\Galaxy\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Platform\Windows\DirectXShader.cpp" />
   </ItemGroup>
 </Project>
