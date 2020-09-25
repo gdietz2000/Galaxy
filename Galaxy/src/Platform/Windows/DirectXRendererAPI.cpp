@@ -2,6 +2,8 @@
 #include "DirectXRendererAPI.h"
 
 #include "Galaxy/Core/Application.h"
+#include "glm/gtc/type_ptr.hpp"
+
 namespace Galaxy
 {
 	void DirectXRendererAPI::Init()
@@ -9,17 +11,13 @@ namespace Galaxy
 		m_Context = (DirectXContext*)Application::Get().GetWindow().GetContext();
 	}
 
-	void DirectXRendererAPI::SetClearColor(float color[4])
+	void DirectXRendererAPI::SetClearColor(const glm::vec4& color)
 	{
-		_r = color[0];
-		_g = color[1];
-		_b = color[2];
-		_a = color[3];
+		m_Color = color;
 	}
 
 	void DirectXRendererAPI::Clear()
 	{
-		float m_Color[] = { _r, _g, _b, _a };
-		m_Context->GetContext()->ClearRenderTargetView(m_Context->GetRenderTargetView().Get(), m_Color);
+		m_Context->GetContext()->ClearRenderTargetView(m_Context->GetRenderTargetView().Get(), glm::value_ptr(m_Color));
 	}
 }

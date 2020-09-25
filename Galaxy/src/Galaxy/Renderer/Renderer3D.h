@@ -2,6 +2,8 @@
 
 #include "Platform/Windows/DirectXContext.h"
 #include "Buffer.h"
+
+#include "glm/glm.hpp"
 #include "wrl.h"
 
 namespace Galaxy
@@ -10,7 +12,7 @@ namespace Galaxy
 	{
 	public:
 		static void Init();
-		static void DrawQuad(float color[4]);
+		static void DrawQuad(glm::vec4 color);
 	private:
 		static DirectXContext* m_Context;
 

@@ -70,9 +70,9 @@ namespace Galaxy
 		pixelShader->Bind();
 	}
 
-	void Renderer3D::DrawQuad(float color[4])
+	void Renderer3D::DrawQuad(glm::vec4 color)
 	{
-		squareColor->SetData(color);
+		squareColor->SetData((glm::vec4*)&color);
 
 		squareColor->Bind(ConstantBuffer::ConstantBufferType::Pixel, 0);
 

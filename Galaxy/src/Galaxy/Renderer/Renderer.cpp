@@ -8,7 +8,7 @@ namespace Galaxy
 		RenderCommand::Init();
 	}
 
-	void Renderer::SetClearColor(float color[4]) 
+	void Renderer::SetClearColor(const glm::vec4& color) 
 	{
 		RenderCommand::SetClearColor(color);
 	}

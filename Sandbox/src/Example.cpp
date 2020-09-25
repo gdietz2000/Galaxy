@@ -5,6 +5,8 @@
 #include "Galaxy/Renderer/Renderer.h"
 #include "Galaxy/Renderer/Renderer3D.h"
 
+#include "glm/gtc/type_ptr.hpp"
+
 class ExampleLayer : public Galaxy::Layer
 {
 public:
@@ -13,7 +15,7 @@ public:
 
 	void OnUpdate(Galaxy::Timestep ts) override 
 	{
-		float color[4] = { 0.0f,1.0f, 1.0f, 1.0f };
+		glm::vec4 color = { 0.0f,1.0f, 1.0f, 1.0f };
 		Galaxy::Renderer::SetClearColor(color);
 		Galaxy::Renderer::Clear();
 
@@ -26,7 +28,7 @@ public:
 
 		ImGui::Value("FPS", 1.0f / ts.GetSeconds());
 
-		ImGui::ColorPicker4("Square Color", m_Color);
+		ImGui::ColorPicker4("Square Color", glm::value_ptr(m_Color));
 
 		ImGui::End();
 
@@ -34,7 +36,7 @@ public:
 		ImGui::ShowDemoWindow(&show);
 	}
 private:
-	float m_Color[4] = { 0,0,0,0 };
+	glm::vec4 m_Color = {0.0f, 0.0f, 0.0f, 1.0f};
 };
 
 class SandboxApp : public Galaxy::Application

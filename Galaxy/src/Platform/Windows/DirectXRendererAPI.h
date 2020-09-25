@@ -12,11 +12,11 @@ namespace Galaxy
 	public:
 
 		virtual void Init() override;
-		virtual void SetClearColor(float color[4]) override;
+		virtual void SetClearColor(const glm::vec4& color) override;
 		virtual void Clear() override;
 
 	private:
 		DirectXContext* m_Context;
-		float _r, _g, _b, _a;
+		glm::vec4 m_Color;
 	};
 }

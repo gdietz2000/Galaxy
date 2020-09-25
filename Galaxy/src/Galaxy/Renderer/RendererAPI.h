@@ -1,5 +1,7 @@
 #pragma once
 
+#include "glm/glm.hpp"
+
 namespace Galaxy
 {
 	class RendererAPI
@@ -13,7 +15,7 @@ namespace Galaxy
 
 	public:
 		virtual void Init() = 0;
-		virtual void SetClearColor(float color[4]) = 0;
+		virtual void SetClearColor(const glm::vec4& color) = 0;
 		virtual void Clear() = 0;
 
 		inline static API GetAPI() { return s_API; }
