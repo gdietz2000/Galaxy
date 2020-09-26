@@ -50,20 +50,12 @@ namespace Galaxy
 		Ref<IndexBuffer> squareIndex = IndexBuffer::Create(indices, 6);
 		squareColor = ConstantBuffer::Create(sizeof(float) * 4);
 
-		D3D11_INPUT_ELEMENT_DESC layout[]
-		{
-			{"POSITION", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0,  D3D11_INPUT_PER_VERTEX_DATA, 0}
-		};
-
 		Ref<Shader> vertexShader = Shader::Create("src/shaders/VertexShader.hlsl", Shader::ShaderType::Vertex);
 		Ref<Shader> pixelShader = Shader::Create("src/shaders/PixelShader.hlsl", Shader::ShaderType::Pixel);
 
-		result = m_Context->GetDevice()->CreateInputLayout(layout, 1, vertexShader->GetData(), vertexShader->GetSize(), m_InputLayout.GetAddressOf());
-		assert(!FAILED(result));
+		Ref<InputLayout> squareLayout = InputLayout::Create({ {std::string("POSITION"), ShaderDataType::Float2 } }, vertexShader);
 
-		m_Context->GetContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-		m_Context->GetContext()->IASetInputLayout(m_InputLayout.Get());
-
+		squareLayout->Bind();
 		squareVertex->Bind();
 		squareIndex->Bind();
 		vertexShader->Bind();

@@ -7,6 +7,25 @@
 
 namespace Galaxy
 {
+	class DirectXInputLayout : public InputLayout
+	{
+	public:
+		DirectXInputLayout(const BufferLayout& layout, Ref<Shader> vertexShader);
+		virtual ~DirectXInputLayout() {};
+
+		virtual void Bind() const override;
+		virtual void Unbind() const override;
+
+		virtual void SetTopology(const DrawType& drawType) const override;
+		inline virtual const BufferLayout& GetLayout() const override { return m_Layout; };
+
+	private:
+		DirectXContext* m_Context;
+		Microsoft::WRL::ComPtr<ID3D11InputLayout> m_InputLayout;
+
+		BufferLayout m_Layout;
+	};
+
 	class DirectXVertexBuffer : public VertexBuffer
 	{
 	public:
@@ -15,6 +34,7 @@ namespace Galaxy
 
 		virtual void Bind(int index) override;
 		virtual void Unbind() const override;
+
 	private:
 		DirectXContext* m_Context;
 		Microsoft::WRL::ComPtr<ID3D11Buffer> m_VertexBuffer;

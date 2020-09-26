@@ -5,6 +5,68 @@
 
 namespace Galaxy
 {
+	//Input Layout
+
+	DirectXInputLayout::DirectXInputLayout(const BufferLayout& layout, Ref<Shader> vertexShader)
+	{
+		m_Context = (DirectXContext*)Application::Get().GetWindow().GetContext();
+
+		m_Layout = layout;
+
+		std::vector<D3D11_INPUT_ELEMENT_DESC> layoutVector;
+
+		for (auto& element : m_Layout)
+		{
+
+			DXGI_FORMAT format;
+
+			switch (element.Type)
+			{
+			case ShaderDataType::Float: format = DXGI_FORMAT_R32_FLOAT; break;
+			case ShaderDataType::Float2: format = DXGI_FORMAT_R32G32_FLOAT; break;
+			case ShaderDataType::Float3: format = DXGI_FORMAT_R32G32B32_FLOAT; break;
+			case ShaderDataType::Float4: format = DXGI_FORMAT_R32G32B32A32_FLOAT; break;
+			case ShaderDataType::Int: format = DXGI_FORMAT_R32_SINT; break;
+			case ShaderDataType::Int2: format = DXGI_FORMAT_R32G32_SINT; break;
+			case ShaderDataType::Int3: format = DXGI_FORMAT_R32G32B32_SINT; break;
+			case ShaderDataType::Int4: format = DXGI_FORMAT_R32G32B32A32_SINT; break;
+			case ShaderDataType::Mat3: format = DXGI_FORMAT_UNKNOWN; break;
+			case ShaderDataType::Mat4: format = DXGI_FORMAT_UNKNOWN; break;
+			case ShaderDataType::Bool: format = DXGI_FORMAT_R8_TYPELESS; break;
+			}
+
+			layoutVector.push_back({ element.Name.c_str(), 0, format, 0, element.Offset, D3D11_INPUT_PER_VERTEX_DATA, 0 });
+		}
+
+		m_Context->GetDevice()->CreateInputLayout(layoutVector.data(), layoutVector.size(), vertexShader->GetData(), vertexShader->GetSize(), m_InputLayout.GetAddressOf());
+	}
+
+	void DirectXInputLayout::Bind() const 
+	{
+		m_Context->GetContext()->IASetInputLayout(m_InputLayout.Get());
+	}
+
+	void DirectXInputLayout::Unbind() const
+	{
+		m_Context->GetContext()->IASetInputLayout(nullptr);
+	}
+
+	void DirectXInputLayout::SetTopology(const DrawType& drawType) const 
+	{
+		D3D11_PRIMITIVE_TOPOLOGY topology;
+
+		switch (drawType)
+		{
+		case DrawType::Point: topology = D3D11_PRIMITIVE_TOPOLOGY_POINTLIST; break;
+		case DrawType::Line: topology = D3D11_PRIMITIVE_TOPOLOGY_LINELIST; break;
+		case DrawType::Triangle: topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST; break;
+		}
+
+		m_Context->GetContext()->IASetPrimitiveTopology(topology);
+	}
+
+	//Vertex Buffer
+
 	DirectXVertexBuffer::DirectXVertexBuffer(float* vertices, uint32_t size)
 	{
 		m_Context = (DirectXContext*)Application::Get().GetWindow().GetContext();
