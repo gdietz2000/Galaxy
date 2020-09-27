@@ -17,7 +17,6 @@ namespace Galaxy
 
 		for (auto& element : m_Layout)
 		{
-
 			DXGI_FORMAT format;
 
 			switch (element.Type)
@@ -60,6 +59,8 @@ namespace Galaxy
 		case DrawType::Point: topology = D3D11_PRIMITIVE_TOPOLOGY_POINTLIST; break;
 		case DrawType::Line: topology = D3D11_PRIMITIVE_TOPOLOGY_LINELIST; break;
 		case DrawType::Triangle: topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST; break;
+		default:
+			topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST; break;
 		}
 
 		m_Context->GetContext()->IASetPrimitiveTopology(topology);

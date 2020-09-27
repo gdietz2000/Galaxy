@@ -112,10 +112,12 @@
     <ClInclude Include="src\Galaxy\Renderer\Renderer3D.h" />
     <ClInclude Include="src\Galaxy\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Galaxy\Renderer\Shader.h" />
+    <ClInclude Include="src\Galaxy\Renderer\Texture.h" />
     <ClInclude Include="src\Platform\Windows\DirectXBuffer.h" />
     <ClInclude Include="src\Platform\Windows\DirectXContext.h" />
     <ClInclude Include="src\Platform\Windows\DirectXRendererAPI.h" />
     <ClInclude Include="src\Platform\Windows\DirectXShader.h" />
+    <ClInclude Include="src\Platform\Windows\DirectXTexture2D.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\gxpch.h" />
     <ClInclude Include="vendor\DirectX\DDSTextureLoader.h" />
@@ -541,10 +543,12 @@
     <ClCompile Include="src\Galaxy\Renderer\Renderer3D.cpp" />
     <ClCompile Include="src\Galaxy\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Galaxy\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Galaxy\Renderer\Texture.cpp" />
     <ClCompile Include="src\Platform\Windows\DirectXBuffer.cpp" />
     <ClCompile Include="src\Platform\Windows\DirectXContext.cpp" />
     <ClCompile Include="src\Platform\Windows\DirectXRendererAPI.cpp" />
     <ClCompile Include="src\Platform\Windows\DirectXShader.cpp" />
+    <ClCompile Include="src\Platform\Windows\DirectXTexture2D.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\gxpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

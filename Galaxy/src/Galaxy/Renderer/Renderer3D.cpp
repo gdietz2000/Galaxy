@@ -7,9 +7,8 @@
 
 #include "Renderer3D.h"
 
-#include "../vendor/DirectX/DDSTextureLoader.h"
-
 #include "Galaxy/Renderer/Shader.h"
+#include "Galaxy/Renderer/Texture.h"
 
 #include <d3dcompiler.h>
 
@@ -54,6 +53,10 @@ namespace Galaxy
 		Ref<Shader> pixelShader = Shader::Create("src/shaders/PixelShader.hlsl", Shader::ShaderType::Pixel);
 
 		Ref<InputLayout> squareLayout = InputLayout::Create({ {std::string("POSITION"), ShaderDataType::Float2 } }, vertexShader);
+		squareLayout->SetTopology(DrawType::Triangle);
+
+		Ref<Texture2D> sampleTexture = Texture2D::Create(1, 1);
+
 
 		squareLayout->Bind();
 		squareVertex->Bind();
@@ -64,12 +67,14 @@ namespace Galaxy
 
 	void Renderer3D::DrawQuad(glm::vec4 color)
 	{
+		//Set Color to ImGui value
 		squareColor->SetData((glm::vec4*)&color);
-
 		squareColor->Bind(ConstantBuffer::ConstantBufferType::Pixel, 0);
 
+		//Draw the thing
 		m_Context->GetContext()->DrawIndexed(6, 0, 0);
 
+		//Unind current buffer
 		squareColor->Unbind();
 	}
 }
