@@ -4,6 +4,8 @@
 #include "Platform/Windows/DirectXContext.h"
 
 #include "Galaxy/Renderer/Buffer.h"
+#include "Galaxy/Renderer/BatchArray.h"
+#include "RenderCommand.h"
 
 #include "Renderer3D.h"
 
@@ -16,18 +18,34 @@ namespace Galaxy
 {
 	DirectXContext* Renderer3D::m_Context = nullptr;
 
+	struct QuadVertex
+	{
+		glm::vec3 position;
+		glm::vec2 texcoords;
+		glm::vec4 color;
+	};
+
 	struct RenderData3D
 	{
-		Ref<VertexBuffer> m_VertexBuffer;
-		Ref<IndexBuffer> m_IndexBuffer;
-		Ref<InputLayout> m_InputLayout;
+		static const uint32_t MaxQuads = 100000;
+		static const uint32_t MaxVertices = MaxQuads * 4;
+		static const uint32_t MaxIndices = MaxQuads * 6;
+		static const uint32_t MaxTextureSlots = 32;
+
+		Ref<BatchArray> QuadBatchArray;
+		Ref<VertexBuffer> QuadVertexBuffer;
+
+		uint32_t QuadIndexCount = 0;
+
+		QuadVertex* QuadVertexBufferBase = nullptr;
+		QuadVertex* QuadVertexBufferPtr = nullptr;
 
 		Ref<Shader> m_VertexShader;
-		Ref<Shader> m_PixelShader;
+		Ref<Shader> m_ColorShader;
 
-		Ref<ConstantBuffer> m_ColorBuffer;
+		Renderer3D::Statistics stats;
 
-		Ref<Texture2D> m_WhiteTexture;
+		glm::vec3 positions[4];
 	};
 
 	static RenderData3D data;
@@ -38,70 +56,121 @@ namespace Galaxy
 
 		HRESULT result;
 
-		float vertices[] =
-		{
-			-1, -1, 0.0f, 1.0f,
-			-1, 1, 0.0f, 0.0f,
-			1, -1, 1.0f, 1.0f,
-			1, 1, 1.0f, 0.0f,
-		};
-
-		unsigned int indices[]
-		{
-			0,1,2,
-			1,3,2,
-		};
-
-		data.m_VertexBuffer = VertexBuffer::Create(vertices, sizeof(float) * 16);
-		data.m_IndexBuffer = IndexBuffer::Create(indices, 6);
-		data.m_ColorBuffer = ConstantBuffer::Create(sizeof(float) * 4);
-
 		data.m_VertexShader = Shader::Create("src/shaders/VertexShader.hlsl", Shader::ShaderType::Vertex);
-		//data.m_PixelShader = Shader::Create("src/shaders/PixelShader.hlsl", Shader::ShaderType::Pixel);
-		data.m_PixelShader = Shader::Create("src/shaders/TextureShader.hlsl", Shader::ShaderType::Pixel);
 
-		data.m_InputLayout = InputLayout::Create(
-			{ 
-				{std::string("POSITION"), ShaderDataType::Float2 },
-				{std::string("TEXCOORD"), ShaderDataType::Float2 }
+		data.QuadBatchArray = BatchArray::Create();
+
+		data.QuadVertexBuffer = VertexBuffer::Create(data.MaxVertices * sizeof(QuadVertex));
+		data.QuadVertexBuffer->SetLayout({
+			{"POSITION", ShaderDataType::Float3},
+			{"TEXCOORD", ShaderDataType::Float2},
+			{"COLOR", ShaderDataType::Float4}
 			}, data.m_VertexShader);
-		
-		data.m_InputLayout->SetTopology(DrawType::Triangle);
 
+		data.QuadBatchArray->AddVertexBuffer(data.QuadVertexBuffer);
 
-		data.m_WhiteTexture = Texture2D::Create("src/textures/Supernova.dds");
-		
-		//data.m_WhiteTexture = Texture2D::Create(1, 1);
-		//uint32_t textureData = 0xffffffff;
-		//data.m_WhiteTexture->SetData(&textureData, sizeof(uint32_t));
+		data.QuadVertexBufferBase = new QuadVertex[data.MaxVertices];
+
+		uint32_t* quadIndices = new uint32_t[data.MaxIndices];
+
+		uint32_t offset = 0;
+		for (uint32_t i = 0; i < RenderData3D::MaxIndices; i += 6)
+		{
+			quadIndices[i + 0] = offset + 0;
+			quadIndices[i + 1] = offset + 1;
+			quadIndices[i + 2] = offset + 2;
+
+			quadIndices[i + 3] = offset + 2;
+			quadIndices[i + 4] = offset + 3;
+			quadIndices[i + 5] = offset + 0;
+
+			offset += 4;
+		}
+
+		Ref<IndexBuffer> QuadIndexBuffer = IndexBuffer::Create(quadIndices, data.MaxIndices);
+		data.QuadBatchArray->SetIndexBuffer(QuadIndexBuffer);
+		delete[] quadIndices;
+
+		data.m_ColorShader = Shader::Create("src/shaders/PixelShader.hlsl", Shader::ShaderType::Pixel);
+		data.m_ColorShader->Bind();
+
+		data.positions[0] = { -0.5f, -0.5f, 0.0f };
+		data.positions[1] = { 0.5f, -0.5f, 0.0f };
+		data.positions[2] = { 0.5f, 0.5f, 0.0f };
+		data.positions[3] = { -0.5f, 0.5f, 0.0f };
 	}
 
-	void Renderer3D::DrawQuad(glm::vec4 color)
+	void Renderer3D::Shutdown()
 	{
-		data.m_VertexBuffer->Bind();
-		data.m_IndexBuffer->Bind();
-		data.m_InputLayout->Bind();
+		delete[] data.QuadVertexBufferBase;
+	}
+
+	void Renderer3D::BeginScene()
+	{
+		data.QuadBatchArray->Bind();
+		data.m_ColorShader->Bind();
+
+		data.QuadIndexCount = 0;
+		data.QuadVertexBufferPtr = data.QuadVertexBufferBase;
+	}
+
+	void Renderer3D::EndScene()
+	{
+		uint32_t dataSize = (uint32_t)((uint8_t*)data.QuadVertexBufferPtr - (uint8_t*)data.QuadVertexBufferBase);
+		data.QuadVertexBuffer->SetData(data.QuadVertexBufferBase, dataSize);
+
+		Flush();
+	}
+
+	void Renderer3D::Flush()
+	{
+		if (data.QuadIndexCount == 0)
+			return;
 
 		data.m_VertexShader->Bind();
-		data.m_PixelShader->Bind();
 
-		//Set Color to ImGui value
-		//data.m_ColorBuffer->SetData((glm::vec4*)&color);
-		//data.m_ColorBuffer->Bind(ConstantBuffer::ConstantBufferType::Pixel, 0);
+		RenderCommand::DrawIndexed(data.QuadBatchArray, data.QuadIndexCount);
+		data.stats.DrawCalls++;
+	}
 
-		data.m_WhiteTexture->Bind();
+	void Renderer3D::FlushAndReset()
+	{
+		EndScene();
 
-		//Draw the thing
-		m_Context->GetContext()->DrawIndexed(6, 0, 0);
+		data.QuadIndexCount = 0;
+		data.QuadVertexBufferPtr = data.QuadVertexBufferBase;
 
-		//Unbind current buffer
-		data.m_VertexBuffer->Unbind();
-		data.m_IndexBuffer->Unbind();
-		data.m_InputLayout->Unbind();
+	}
 
-		data.m_VertexShader->Unbind();
-		data.m_PixelShader->Unbind();
+	void Renderer3D::DrawQuad(glm::vec3 position, glm::vec4 color)
+	{
+		constexpr size_t quadVertexCount = 4;
 
-		//data.m_ColorBuffer->Unbind();
+		glm::vec2 texcoords[] = { {0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f} };
+
+		if (data.QuadIndexCount >= RenderData3D::MaxIndices)
+			FlushAndReset();
+
+		for (size_t i = 0; i < quadVertexCount; i++)
+		{
+			data.QuadVertexBufferPtr->position = data.positions[i] + position;
+			data.QuadVertexBufferPtr->texcoords = texcoords[i];
+			data.QuadVertexBufferPtr->color = color;
+			data.QuadVertexBufferPtr++;
+		}
+
+		data.QuadIndexCount += 6;
+
+		data.stats.QuadCount++;
+	}
+
+	void Renderer3D::ResetStats()
+	{
+		memset(&data.stats, 0, sizeof(Statistics));
+	}
+
+	Renderer3D::Statistics Renderer3D::GetStats()
+	{
+		return data.stats;
 	}
 }

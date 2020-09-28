@@ -1350,6 +1350,8 @@
     <ClInclude Include="src\Platform\Windows\DirectXShader.h" />
     <ClInclude Include="src\Galaxy\Renderer\Texture.h" />
     <ClInclude Include="src\Platform\Windows\DirectXTexture2D.h" />
+    <ClInclude Include="src\Galaxy\Renderer\BatchArray.h" />
+    <ClInclude Include="src\Platform\Windows\DirectXBatchArray.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Galaxy\Core\Application.cpp">
@@ -1399,5 +1401,7 @@
     <ClCompile Include="src\Platform\Windows\DirectXShader.cpp" />
     <ClCompile Include="src\Galaxy\Renderer\Texture.cpp" />
     <ClCompile Include="src\Platform\Windows\DirectXTexture2D.cpp" />
+    <ClCompile Include="src\Galaxy\Renderer\BatchArray.cpp" />
+    <ClCompile Include="src\Platform\Windows\DirectXBatchArray.cpp" />
   </ItemGroup>
 </Project>

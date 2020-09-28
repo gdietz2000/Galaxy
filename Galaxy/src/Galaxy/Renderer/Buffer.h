@@ -104,20 +104,6 @@ namespace Galaxy
 		std::vector<BufferElement> m_Elements;
 		uint32_t m_Stride;
 	};
-	
-	class InputLayout
-	{
-	public:
-		virtual ~InputLayout() {};
-
-		virtual void Bind() const = 0;
-		virtual void Unbind() const = 0;
-
-		virtual void SetTopology(const DrawType& drawType) const = 0;
-		virtual const BufferLayout& GetLayout() const = 0;
-
-		static Ref<InputLayout> Create(const BufferLayout& layout, Ref<Shader> vertexShader);
-	};
 
 	class VertexBuffer
 	{
@@ -127,7 +113,16 @@ namespace Galaxy
 		virtual void Bind(int index = 0) = 0;
 		virtual void Unbind() const = 0;
 
+		virtual void SetTopology(const DrawType& drawType) const = 0;
+		virtual const BufferLayout& GetLayout() const = 0;
+		virtual const Ref<Shader>& GetShader() const = 0;
+		virtual void SetLayout(const BufferLayout& layout, Ref<Shader> vertexShader) = 0;
+
+		virtual void SetData(void* data, uint32_t size) = 0;
+		virtual void* GetData() const = 0;
+
 		static Ref<VertexBuffer> Create(float* vertices, uint32_t size);
+		static Ref<VertexBuffer> Create(uint32_t size);
 	};
 
 	class IndexBuffer

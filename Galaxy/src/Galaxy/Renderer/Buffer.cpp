@@ -6,24 +6,24 @@
 
 namespace Galaxy
 {
-	Ref<InputLayout> InputLayout::Create(const BufferLayout& layout, Ref<Shader> vertexShader)
-	{
-		switch (RendererAPI::GetAPI())
-		{
-		case RendererAPI::API::None: GX_CORE_ASSERT(false, "Renderer does not support None"); return nullptr;
-		case RendererAPI::API::DirectX: return CreateRef<DirectXInputLayout>(layout, vertexShader);
-		default:
-			GX_CORE_ASSERT(false, "Unknown RendererAPI");
-			return nullptr;
-		}
-	}
-
 	Ref<VertexBuffer> VertexBuffer::Create(float* vertices, uint32_t size)
 	{
 		switch (RendererAPI::GetAPI())
 		{
 		case RendererAPI::API::None: GX_CORE_ASSERT(false, "Renderer does not support None"); return nullptr;
 		case RendererAPI::API::DirectX: return CreateRef<DirectXVertexBuffer>(vertices, size);
+		default:
+			GX_CORE_ASSERT(false, "Unknown RendererAPI");
+			return nullptr;
+		}
+	}
+
+	Ref<VertexBuffer> VertexBuffer::Create(uint32_t size)
+	{
+		switch (RendererAPI::GetAPI())
+		{
+		case RendererAPI::API::None: GX_CORE_ASSERT(false, "Renderer does not support None"); return nullptr;
+		case RendererAPI::API::DirectX: return CreateRef<DirectXVertexBuffer>(size);
 		default:
 			GX_CORE_ASSERT(false, "Unknown RendererAPI");
 			return nullptr;

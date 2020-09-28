@@ -69,7 +69,20 @@ namespace Galaxy
 		ID3D11RenderTargetView* views = { m_RenderTargetView.Get() };
 
 		m_Context->OMSetRenderTargets(1, &views, nullptr);
+
+		D3D11_RASTERIZER_DESC rDesc;
+		ZeroMemory(&rDesc, sizeof(rDesc));
+		rDesc.CullMode = D3D11_CULL_NONE;
+		rDesc.FillMode = D3D11_FILL_SOLID;
+
+		ID3D11RasterizerState* state;
+		hr = m_Device->CreateRasterizerState(&rDesc, &state);
+		assert(!FAILED(hr));
+
+		m_Context->RSSetState(state);
 		m_Context->RSSetViewports(1, &m_Viewport);
+
+		state->Release();
 	}
 
 	void DirectXContext::SwapBuffers()

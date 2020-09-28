@@ -14,6 +14,7 @@ namespace Galaxy
 		virtual void Init() override;
 		virtual void SetClearColor(const glm::vec4& color) override;
 		virtual void Clear() override;
+		virtual void DrawIndexed(const Ref<BatchArray>& batch, uint32_t indices) override;
 
 	private:
 		DirectXContext* m_Context;

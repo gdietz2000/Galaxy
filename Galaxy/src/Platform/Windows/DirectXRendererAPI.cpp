@@ -20,4 +20,10 @@ namespace Galaxy
 	{
 		m_Context->GetContext()->ClearRenderTargetView(m_Context->GetRenderTargetView().Get(), glm::value_ptr(m_Color));
 	}
+
+	void DirectXRendererAPI::DrawIndexed(const Ref<BatchArray>& batch, uint32_t indices)
+	{
+		uint32_t count = indices ? indices : batch->GetIndexBuffer()->GetCount();
+		m_Context->GetContext()->DrawIndexed(count, 0, 0);
+	}
 }

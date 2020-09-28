@@ -3,15 +3,67 @@
 #include "Galaxy/Core/Application.h"
 #include "DirectXBuffer.h"
 
+#include "glm/glm.hpp"
+
 namespace Galaxy
 {
 	//Input Layout
 
-	DirectXInputLayout::DirectXInputLayout(const BufferLayout& layout, Ref<Shader> vertexShader)
+	struct QuadVertex
+	{
+		glm::vec3 position;
+		glm::vec2 texcoord;
+		glm::vec4 color;
+	};
+
+	//Vertex Buffer
+
+	DirectXVertexBuffer::DirectXVertexBuffer(float* vertices, uint32_t size)
 	{
 		m_Context = (DirectXContext*)Application::Get().GetWindow().GetContext();
 
+		D3D11_BUFFER_DESC bDesc;
+		ZeroMemory(&bDesc, sizeof(bDesc));
+
+		bDesc.ByteWidth = size;
+		bDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+		bDesc.CPUAccessFlags = 0;
+		bDesc.MiscFlags = 0;
+		bDesc.StructureByteStride = 0;
+		bDesc.Usage = D3D11_USAGE_DEFAULT;
+
+		D3D11_SUBRESOURCE_DATA mData;
+		ZeroMemory(&mData, sizeof(mData));
+
+		mData.pSysMem = vertices;
+
+		m_Context->GetDevice()->CreateBuffer(&bDesc, &mData, m_VertexBuffer.GetAddressOf());
+	}
+
+	DirectXVertexBuffer::DirectXVertexBuffer(uint32_t size)
+	{
+		m_Context = (DirectXContext*)Application::Get().GetWindow().GetContext();
+
+		D3D11_BUFFER_DESC bDesc;
+		ZeroMemory(&bDesc, sizeof(bDesc));
+
+		bDesc.ByteWidth = size;
+		bDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+		bDesc.CPUAccessFlags = 0;
+		bDesc.MiscFlags = 0;
+		bDesc.StructureByteStride = 0;
+		bDesc.Usage = D3D11_USAGE_DEFAULT;
+
+		m_Context->GetDevice()->CreateBuffer(&bDesc, nullptr, m_VertexBuffer.GetAddressOf());
+	}
+
+	void DirectXVertexBuffer::SetLayout(const BufferLayout& layout, Ref<Shader> vertexShader)
+	{
+		if (!m_Context)
+			m_Context = (DirectXContext*)Application::Get().GetWindow().GetContext();
+
 		m_Layout = layout;
+		m_VertexShaderRef = vertexShader;
 
 		std::vector<D3D11_INPUT_ELEMENT_DESC> layoutVector;
 
@@ -38,19 +90,11 @@ namespace Galaxy
 		}
 
 		m_Context->GetDevice()->CreateInputLayout(layoutVector.data(), layoutVector.size(), vertexShader->GetData(), vertexShader->GetSize(), m_InputLayout.GetAddressOf());
+
+		SetTopology(DrawType::Triangle);
 	}
 
-	void DirectXInputLayout::Bind() const 
-	{
-		m_Context->GetContext()->IASetInputLayout(m_InputLayout.Get());
-	}
-
-	void DirectXInputLayout::Unbind() const
-	{
-		m_Context->GetContext()->IASetInputLayout(nullptr);
-	}
-
-	void DirectXInputLayout::SetTopology(const DrawType& drawType) const 
+	void DirectXVertexBuffer::SetTopology(const DrawType& drawType) const
 	{
 		D3D11_PRIMITIVE_TOPOLOGY topology;
 
@@ -66,41 +110,34 @@ namespace Galaxy
 		m_Context->GetContext()->IASetPrimitiveTopology(topology);
 	}
 
-	//Vertex Buffer
-
-	DirectXVertexBuffer::DirectXVertexBuffer(float* vertices, uint32_t size)
+	const BufferLayout& DirectXVertexBuffer::GetLayout() const 
 	{
-		m_Context = (DirectXContext*)Application::Get().GetWindow().GetContext();
+		return m_Layout;
+	}
 
-		D3D11_BUFFER_DESC bDesc;
-		ZeroMemory(&bDesc, sizeof(bDesc));
+	const Ref<Shader>& DirectXVertexBuffer::GetShader() const
+	{
+		return m_VertexShaderRef;
+	}
 
-		bDesc.ByteWidth = size;
-		bDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-		bDesc.CPUAccessFlags = 0;
-		bDesc.MiscFlags = 0;
-		bDesc.StructureByteStride = 0;
-		bDesc.Usage = D3D11_USAGE_DEFAULT;
-
-		D3D11_SUBRESOURCE_DATA mData;
-		ZeroMemory(&mData, sizeof(mData));
-
-		mData.pSysMem = vertices;
-
-		m_Context->GetDevice()->CreateBuffer(&bDesc, &mData, m_VertexBuffer.GetAddressOf());
+	void DirectXVertexBuffer::SetData(void* data, uint32_t size)
+	{
+		m_Context->GetContext()->UpdateSubresource(m_VertexBuffer.Get(), NULL, nullptr, data, 0, 0);
 	}
 
 	void DirectXVertexBuffer::Bind(int index = 0)
 	{
 		ID3D11Buffer* buffers[] = { m_VertexBuffer.Get() };
-		UINT strides[] = { sizeof(float) * 4 };
+		UINT strides[] = { sizeof(QuadVertex) };
 		UINT offset[] = { 0 };
+		m_Context->GetContext()->IASetInputLayout(m_InputLayout.Get());
 		m_Context->GetContext()->IASetVertexBuffers(index, 1, buffers, strides, offset);
 		m_Index = index;
 	}
 
 	void DirectXVertexBuffer::Unbind() const
 	{
+		m_Context->GetContext()->IASetInputLayout(nullptr);
 		m_Context->GetContext()->IASetVertexBuffers(m_Index, 0, nullptr, nullptr, nullptr);
 	}
 

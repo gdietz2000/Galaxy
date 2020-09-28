@@ -2,6 +2,7 @@ struct OutputVertex
 {
     float4 position : SV_Position;
     float2 uv : TEXCOORD;
+    float4 color : COLOR;
 };
 
 Texture2D Texture : register(t0);
