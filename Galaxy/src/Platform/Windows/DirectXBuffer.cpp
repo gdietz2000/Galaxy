@@ -93,7 +93,7 @@ namespace Galaxy
 	void DirectXVertexBuffer::Bind(int index = 0)
 	{
 		ID3D11Buffer* buffers[] = { m_VertexBuffer.Get() };
-		UINT strides[] = { sizeof(float) * 2 };
+		UINT strides[] = { sizeof(float) * 4 };
 		UINT offset[] = { 0 };
 		m_Context->GetContext()->IASetVertexBuffers(index, 1, buffers, strides, offset);
 		m_Index = index;
