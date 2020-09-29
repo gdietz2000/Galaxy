@@ -8,7 +8,6 @@
 #endif
 
 #include <wrl.h>
-#include "Galaxy/Renderer/Framebuffer.h"
 #include "Galaxy/Renderer/GraphicContext.h"
 
 namespace Galaxy 
@@ -27,8 +26,6 @@ namespace Galaxy
 		inline Microsoft::WRL::ComPtr<IDXGISwapChain>& GetSwapChain() { return m_SwapChain; }
 		inline Microsoft::WRL::ComPtr<ID3D11RenderTargetView>& GetRenderTargetView() { return m_RenderTargetView; }
 		inline D3D11_VIEWPORT& GetViewport() { return m_Viewport; }
-
-		inline Ref<Framebuffer> GetFramebuffer() { return m_Framebuffer; }
 	private:
 		HWND* windowHandle;
 
@@ -38,6 +35,5 @@ namespace Galaxy
 		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_RenderTargetView;
 		D3D11_VIEWPORT m_Viewport;
 
-		Ref<Framebuffer> m_Framebuffer;
 	};
 }

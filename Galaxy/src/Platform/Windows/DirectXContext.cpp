@@ -56,14 +56,8 @@ namespace Galaxy
 #endif
 		assert(!FAILED(hr));
 
-		FramebufferSpecification specs;
-		specs.width = m_Viewport.Width;
-		specs.height = m_Viewport.Height;
-		specs.swapChainTarget = true;
+		ID3D11Texture2D* backbuffer;
 
-		//m_Framebuffer = Framebuffer::Create(specs);
-
-		ID3D11Resource* backbuffer;
 		hr = m_SwapChain->GetBuffer(0, __uuidof(backbuffer), (void**)&backbuffer);
 		hr = m_Device->CreateRenderTargetView(backbuffer, NULL, &m_RenderTargetView);
 

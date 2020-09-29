@@ -56,7 +56,6 @@ private:
 	Galaxy::Ref<Galaxy::Texture2D> m_SupernovaTexture;
 
 	Galaxy::Ref<Galaxy::Scene> m_ActiveScene;
-
 	glm::vec2 m_ViewportSize = {0.0f, 0.0f};
 };
 
