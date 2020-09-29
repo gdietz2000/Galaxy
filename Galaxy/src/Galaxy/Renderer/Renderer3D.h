@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Platform/Windows/DirectXContext.h"
+#include "Camera.h"
+
 #include "Buffer.h"
 #include "Texture.h"
 
@@ -15,7 +16,7 @@ namespace Galaxy
 		static void Init();
 		static void Shutdown();
 
-		static void BeginScene();
+		static void BeginScene(const Camera& camera, const glm::mat4& transorm);
 		static void EndScene();
 		static void Flush();
 
@@ -34,7 +35,5 @@ namespace Galaxy
 		static Statistics GetStats();
 	private:
 		static void FlushAndReset();
-
-		static DirectXContext* m_Context;
 	};
 }

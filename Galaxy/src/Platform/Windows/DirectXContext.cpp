@@ -18,11 +18,7 @@ namespace Galaxy
 
 	DirectXContext::~DirectXContext()
 	{
-		//if (m_SwapChain) m_SwapChain->Release();
-		//if (m_RenderTargetView) m_RenderTargetView->Release();
 
-		//if (m_Context) m_Context->Release();
-		//if (m_Device) m_Device->Release();
 	}
 
 	void DirectXContext::Init()
@@ -59,6 +55,13 @@ namespace Galaxy
 		hr = D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, NULL, NULL, &dx11, 1, D3D11_SDK_VERSION, &desc, &m_SwapChain, &m_Device, nullptr, &m_Context);
 #endif
 		assert(!FAILED(hr));
+
+		FramebufferSpecification specs;
+		specs.width = m_Viewport.Width;
+		specs.height = m_Viewport.Height;
+		specs.swapChainTarget = true;
+
+		//m_Framebuffer = Framebuffer::Create(specs);
 
 		ID3D11Resource* backbuffer;
 		hr = m_SwapChain->GetBuffer(0, __uuidof(backbuffer), (void**)&backbuffer);

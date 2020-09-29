@@ -16,8 +16,6 @@
 
 namespace Galaxy
 {
-	DirectXContext* Renderer3D::m_Context = nullptr;
-
 	struct QuadVertex
 	{
 		glm::vec3 position;
@@ -52,8 +50,6 @@ namespace Galaxy
 
 	void Renderer3D::Init()
 	{
-		m_Context = (DirectXContext*)Application::Get().GetWindow().GetContext();
-
 		HRESULT result;
 
 		data.m_VertexShader = Shader::Create("src/shaders/VertexShader.hlsl", Shader::ShaderType::Vertex);
@@ -105,9 +101,14 @@ namespace Galaxy
 		delete[] data.QuadVertexBufferBase;
 	}
 
-	void Renderer3D::BeginScene()
+	void Renderer3D::BeginScene(const Camera& camera, const glm::mat4& transform)
 	{
+		glm::mat4 viewProj = camera.GetProjection() * glm::inverse(transform);
+
 		data.QuadBatchArray->Bind();
+		data.m_VertexShader->Bind();
+		data.m_VertexShader->SetMat4(viewProj);
+		
 		data.m_ColorShader->Bind();
 
 		data.QuadIndexCount = 0;
@@ -126,8 +127,6 @@ namespace Galaxy
 	{
 		if (data.QuadIndexCount == 0)
 			return;
-
-		data.m_VertexShader->Bind();
 
 		RenderCommand::DrawIndexed(data.QuadBatchArray, data.QuadIndexCount);
 		data.stats.DrawCalls++;
