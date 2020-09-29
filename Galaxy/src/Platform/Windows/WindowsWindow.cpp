@@ -17,6 +17,7 @@ namespace Galaxy
 	WindowsWindow::WindowData WindowsWindow::m_Data;
 
 	DirectXContext* WindowsWindow::m_Context = nullptr;
+	Ref<Framebuffer> WindowsWindow::m_Framebuffer = nullptr;
 
 	Window* Window::Create(const WindowProps& props)
 	{
@@ -120,25 +121,13 @@ namespace Galaxy
 			UINT width = LOWORD(lParam);
 			UINT height = HIWORD(lParam);
 
-			m_Context->GetRenderTargetView().Reset();
-			m_Context->GetSwapChain()->ResizeBuffers(1, width, height, DXGI_FORMAT_R8G8B8A8_UNORM, 0);
-
-			ID3D11Texture2D* backbuffer;
-
-			HRESULT hr = m_Context->GetSwapChain()->GetBuffer(0, __uuidof(backbuffer), (void**)&backbuffer);
-			hr = m_Context->GetDevice()->CreateRenderTargetView(backbuffer, NULL, m_Context->GetRenderTargetView().GetAddressOf());
-
-			backbuffer->Release();
+			m_Framebuffer->Resize(width, height);
 
 			D3D11_VIEWPORT& view = m_Context->GetViewport();
 			view.Width = width;
 			view.Height = height;
 
 			//------------------------------------------------
-
-			ID3D11RenderTargetView* views = { m_Context->GetRenderTargetView().Get() };
-
-			m_Context->GetContext()->OMSetRenderTargets(1, &views, nullptr);
 
 			m_Data.width = width;
 			m_Data.height = height;
@@ -194,6 +183,13 @@ namespace Galaxy
 			__debugbreak();
 		}
 
+		FramebufferSpecification specs;
+		specs.width = props.Width;
+		specs.height = props.Height;
+		specs.swapChainTarget = true;
+
+		m_Framebuffer = Framebuffer::Create(specs);
+
 		m_Context = new DirectXContext(&m_Window);
 		m_Context->Init();
 
@@ -224,6 +220,8 @@ namespace Galaxy
 		}
 
 		m_Context->SwapBuffers();
+
+		m_Framebuffer->Reset();
 	}
 
 
@@ -235,5 +233,10 @@ namespace Galaxy
 	bool WindowsWindow::IsVSync() const 
 	{
 		return m_Data.vSync;
+	}
+
+	Ref<Framebuffer> WindowsWindow::GetFramebuffer() const
+	{
+		return m_Framebuffer;
 	}
 }

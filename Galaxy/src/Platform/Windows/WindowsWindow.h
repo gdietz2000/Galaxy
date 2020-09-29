@@ -20,8 +20,11 @@ namespace Galaxy
 		void SetVSync(bool enabled) override;
 		bool IsVSync() const override;
 
+		virtual Ref<Framebuffer> GetFramebuffer() const override;
+
 		inline virtual void* GetNativeWindow() const { return m_Window; }
 		inline virtual void* GetContext() const { return m_Context; }
+
 	private:
 		void Init(const WindowProps& props);
 		void Shutdown();
@@ -30,6 +33,8 @@ namespace Galaxy
 
 		HWND m_Window;
 		static DirectXContext* m_Context;
+
+		static Ref<Framebuffer> m_Framebuffer;
 
 		struct WindowData
 		{

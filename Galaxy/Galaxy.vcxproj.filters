@@ -1355,6 +1355,8 @@
     <ClInclude Include="src\Galaxy\Renderer\Camera.h" />
     <ClInclude Include="src\Galaxy\Scene\SceneCamera.h" />
     <ClInclude Include="src\Galaxy\Scene\Scene.h" />
+    <ClInclude Include="src\Galaxy\Renderer\Framebuffer.h" />
+    <ClInclude Include="src\Platform\Windows\DirectXFramebuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Galaxy\Core\Application.cpp">
@@ -1408,5 +1410,7 @@
     <ClCompile Include="src\Platform\Windows\DirectXBatchArray.cpp" />
     <ClCompile Include="src\Galaxy\Scene\SceneCamera.cpp" />
     <ClCompile Include="src\Galaxy\Scene\Scene.cpp" />
+    <ClCompile Include="src\Galaxy\Renderer\Framebuffer.cpp" />
+    <ClCompile Include="src\Platform\Windows\DirectXFramebuffer.cpp" />
   </ItemGroup>
 </Project>

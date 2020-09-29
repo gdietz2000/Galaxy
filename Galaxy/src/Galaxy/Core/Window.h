@@ -5,6 +5,8 @@
 #include "Timestep.h"
 #include "Galaxy/Events/Event.h"
 
+#include "Galaxy/Renderer/Framebuffer.h"
+
 namespace Galaxy
 {
 	struct WindowProps
@@ -36,6 +38,10 @@ namespace Galaxy
 		virtual void* GetNativeWindow() const = 0;
 		virtual void* GetContext() const = 0;
 
+		virtual Ref<Framebuffer> GetFramebuffer() const = 0;
+
 		static Window* Create(const WindowProps& props = WindowProps());
+
+		operator bool() { return this != nullptr; }
 	};
 }
