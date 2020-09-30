@@ -52,7 +52,7 @@ namespace Galaxy
 	{
 		HRESULT result;
 
-		data.m_VertexShader = Shader::Create("src/shaders/VertexShader.hlsl", Shader::ShaderType::Vertex);
+		data.m_VertexShader = Shader::Create("assets/shaders/StandardVertexShader.hlsl", Shader::ShaderType::Vertex);
 
 		data.QuadBatchArray = BatchArray::Create();
 
@@ -87,7 +87,7 @@ namespace Galaxy
 		data.QuadBatchArray->SetIndexBuffer(QuadIndexBuffer);
 		delete[] quadIndices;
 
-		data.m_ColorShader = Shader::Create("src/shaders/PixelShader.hlsl", Shader::ShaderType::Pixel);
+		data.m_ColorShader = Shader::Create("assets/shaders/StandardPixelShader.hlsl", Shader::ShaderType::Pixel);
 		data.m_ColorShader->Bind();
 
 		data.positions[0] = { -0.5f, -0.5f, 0.0f };

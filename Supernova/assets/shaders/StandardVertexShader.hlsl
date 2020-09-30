@@ -19,7 +19,7 @@ cbuffer ModelViewProjection : register(b0)
     float4x4 mvp;
 }
 
-Output main( Vertex v )
+Output main(Vertex v)
 {
     Output ov = (Output) 0;
     ov.pos = mul(float4(v.pos, 1), mvp);

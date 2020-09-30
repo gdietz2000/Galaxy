@@ -1,6 +1,6 @@
 workspace "Galaxy"
 	architecture "x64"
-	 startproject "Sandbox"
+	 startproject "Supernova"
 
 	 configurations 
 	 {
@@ -75,8 +75,55 @@ group ""
 				runtime "Release"
 				optimize "On"
 
-	project "Sandbox"
+				project "Sandbox"
 		location "Sandbox"
+		kind "ConsoleApp"
+		language "C++"
+		cppdialect "C++17"
+		staticruntime "On"
+
+		targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+		objdir ("bin/" .. outputdir .. "/%{prj.name}")
+
+		files 
+		{
+			"%{prj.name}/src/**.h",
+			"%{prj.name}/src/**.cpp"
+		}
+
+		includedirs
+		{
+			"Galaxy/src",
+			"Galaxy/vendor/spdlog/include",
+			"Galaxy/vendor", 
+			"%{IncludeDir.glm}"
+		}
+
+		links
+		{
+			"Galaxy"
+		}
+
+		filter "system:windows"
+			systemversion "latest"
+
+			defines 
+			{
+				"GX_PLATFORM_WINDOWS"
+			}
+
+			filter "configurations:Debug"
+				defines "GX_DEBUG"
+				runtime "Debug"
+				symbols "On"
+
+			filter "configurations:Release"
+				defines "GX_RELEASE"
+				runtime "Release"
+				optimize "On"
+
+	project "Supernova"
+		location "Supernova"
 		kind "ConsoleApp"
 		language "C++"
 		cppdialect "C++17"
