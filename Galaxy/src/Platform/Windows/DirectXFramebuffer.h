@@ -26,7 +26,7 @@ namespace Galaxy
 		virtual void* GetImGuiDrawable() const override { return m_SRV.Get(); }
 		virtual void** GetImGuiDrawableAddressOf() const override { return (void**)m_SRV.GetAddressOf(); }
 
-		virtual void Reset() { m_FrameData.Reset(); }
+		virtual void Reset() { m_FrameData.Reset(); m_CopyTexture.Reset(); }
 
 		virtual const FramebufferSpecification& GetFramebufferSpecification() const override { return m_Specs; }
 

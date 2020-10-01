@@ -18,7 +18,16 @@ namespace Galaxy
 
 	void DirectXRendererAPI::Clear()
 	{
-		m_Context->GetContext()->ClearRenderTargetView(m_Context->GetRenderTargetView().Get(), glm::value_ptr(m_Color));
+		ID3D11RenderTargetView* views[1];
+		m_Context->GetContext()->OMGetRenderTargets(1, views, nullptr);
+
+		if (views[0] == nullptr)
+			m_Context->GetContext()->ClearRenderTargetView(m_Context->GetRenderTargetView().Get(), glm::value_ptr(m_Color));
+		else
+			m_Context->GetContext()->ClearRenderTargetView(views[0], glm::value_ptr(m_Color));
+
+		if (views[0] != nullptr)
+			views[0]->Release();
 	}
 
 	void DirectXRendererAPI::DrawIndexed(const Ref<BatchArray>& batch, uint32_t indices)
