@@ -1,5 +1,7 @@
 #include "EditorLayer.h"
 
+#include "ImGui/imgui.h"
+
 namespace Galaxy
 {
 	EditorLayer::EditorLayer()
@@ -49,6 +51,23 @@ namespace Galaxy
 
 	void EditorLayer::OnImGuiRender(Timestep ts)
 	{
-		
+		ImGui::Begin("Settings");
+
+		auto stats = Renderer3D::GetStats();
+		ImGui::Text("Renderer3D Stats:");
+		ImGui::Text("Draw Calls: %d", stats.DrawCalls);
+		ImGui::Text("Quad Count: %d", stats.QuadCount);
+		ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
+		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
+
+		ImGui::End();
+
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, { 1.0f, 1.0f });
+
+		ImGui::Begin("DirectX11 Texture Test");
+		ImGui::Text("pointer = %p", m_Framebuffer->GetImGuiDrawable());
+		ImGui::Image((void*)m_Framebuffer->GetImGuiDrawable(), ImVec2(512, 512));
+		ImGui::End();
+		ImGui::PopStyleVar();
 	}
 }

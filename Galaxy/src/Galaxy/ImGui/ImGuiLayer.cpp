@@ -13,40 +13,7 @@ namespace Galaxy
 	ImGuiLayer::ImGuiLayer()
 		: Layer("ImGuiLayer")
 	{
-		/*D3D_FEATURE_LEVEL dx11 = D3D_FEATURE_LEVEL_11_0;
 
-		RECT rect;
-		GetClientRect((HWND)Application::Get().GetWindow().GetNativeWindow(), &rect);
-
-		DXGI_SWAP_CHAIN_DESC swapDesc;
-		ZeroMemory(&swapDesc, sizeof(swapDesc));
-		swapDesc.BufferCount = 1;
-		swapDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-		swapDesc.BufferDesc.Width = rect.right - rect.left;
-		swapDesc.BufferDesc.Height = rect.bottom - rect.top;
-		swapDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-		swapDesc.OutputWindow = (HWND)Application::Get().GetWindow().GetNativeWindow();
-		swapDesc.SampleDesc.Count = 1;
-		swapDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
-		swapDesc.Windowed = true;
-
-		D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, NULL, D3D11_CREATE_DEVICE_DEBUG,
-			&dx11, 1, D3D11_SDK_VERSION, &swapDesc, &swap, &device, nullptr, &context);
-
-		ID3D11Resource* backbuffer;
-		HRESULT hr = swap->GetBuffer(0, __uuidof(backbuffer), (void**)&backbuffer);
-		hr = device->CreateRenderTargetView(backbuffer, NULL, &rtv);
-
-		backbuffer->Release();
-
-		context->OMSetRenderTargets(1, &rtv, nullptr);
-
-		port.Width = swapDesc.BufferDesc.Width;
-		port.Height = swapDesc.BufferDesc.Height;
-		port.TopLeftX = port.TopLeftY = 0;
-		port.MinDepth = 0; port.MaxDepth = 1;
-
-		context->RSSetViewports(1, &port);*/
 	}
 
 	ImGuiLayer::~ImGuiLayer()
@@ -96,8 +63,18 @@ namespace Galaxy
 
 	void ImGuiLayer::End()
 	{
+		ImGuiIO& io = ImGui::GetIO();
+		Application& app = Application::Get();
+		io.DisplaySize = ImVec2((float)app.GetWindow().GetWidth(), (float)app.GetWindow().GetHeight());
+
 		//Rendering
 		ImGui::Render();
 		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+
+		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+		{
+			ImGui::UpdatePlatformWindows();
+			ImGui::RenderPlatformWindowsDefault();
+		}
 	}
 }

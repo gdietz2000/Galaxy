@@ -27,7 +27,7 @@ namespace Galaxy
 
 	Application::~Application()
 	{
-		
+
 	}
 
 	void Application::Run()
@@ -77,6 +77,11 @@ namespace Galaxy
 	{
 		m_LayerStack.PushOverlay(overlay);
 		overlay->OnAttach();
+	}
+
+	void Application::Close()
+	{
+		m_Running = false;
 	}
 
 	bool Application::OnWindowClose(WindowCloseEvent& e)

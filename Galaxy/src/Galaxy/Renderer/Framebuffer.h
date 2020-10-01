@@ -22,6 +22,10 @@ namespace Galaxy
 
 		virtual void* Get() const = 0;
 		virtual void** GetAddressOf() const = 0;
+
+		virtual void* GetImGuiDrawable() const = 0;
+		virtual void** GetImGuiDrawableAddressOf() const = 0;
+
 		virtual void Reset() = 0;
 
 		virtual const FramebufferSpecification& GetFramebufferSpecification() const = 0;
