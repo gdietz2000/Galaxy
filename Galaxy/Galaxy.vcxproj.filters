@@ -1383,6 +1383,9 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
+    <ClInclude Include="src\Galaxy\Scene\Entity.h" />
+    <ClInclude Include="src\Galaxy\Scene\Managers.h" />
+    <ClInclude Include="src\Galaxy\Scene\Component.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Galaxy\Core\Application.cpp">

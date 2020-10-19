@@ -25,6 +25,12 @@ namespace Galaxy
 		m_Framebuffer = Application::Get().GetWindow().GetFramebuffer();
 
 		m_ActiveScene = CreateRef<Scene>();
+
+		auto square = m_ActiveScene->CreateEntity("Green Square");
+		square.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.0,1.0,0.0,1.0 });
+
+		m_CameraEntity = m_ActiveScene->CreateEntity("Camera");
+		m_CameraEntity.AddComponent<CameraComponent>();
 	}
 
 	void EditorLayer::OnDetach()
@@ -43,7 +49,7 @@ namespace Galaxy
 		}
 
 		Renderer3D::ResetStats();
-		RenderCommand::SetClearColor({ 0.1f,0.1f,0.1f,1.0f });
+		RenderCommand::SetClearColor({ 0.0f,1.0f,1.0f,1.0f });
 		RenderCommand::Clear();
 
 		m_Framebuffer->Bind();
@@ -140,7 +146,6 @@ namespace Galaxy
 		ImGui::Separator();
 
 		ImGui::ColorPicker4("Scene Picker", glm::value_ptr(m_SceneColor));
-		m_SceneColor.a = 1.0f;
 
 		ImGui::End();
 
@@ -155,7 +160,7 @@ namespace Galaxy
 
 		m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
 
-		ImGui::Image((void*)m_Framebuffer->GetImGuiDrawable(), ImVec2(m_ViewportSize.x, m_ViewportSize.y));
+		ImGui::Image((void*)m_Framebuffer->Get(), ImVec2(m_ViewportSize.x, m_ViewportSize.y));
 		ImGui::End();
 		ImGui::PopStyleVar();
 		ImGui::End();

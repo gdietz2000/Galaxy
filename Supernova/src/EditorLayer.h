@@ -24,7 +24,9 @@ namespace Galaxy
 
 		Ref<Scene> m_ActiveScene;
 
-		glm::vec4 m_SceneColor;
+		Galaxy::Entity m_CameraEntity;
+
+		glm::vec4 m_SceneColor = {0.1f, 0.1f, 0.1f, 1.0f};
 
 		bool m_ViewportFocused = false;
 		bool m_ViewportHovered = false;

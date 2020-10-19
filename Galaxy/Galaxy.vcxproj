@@ -116,6 +116,9 @@
     <ClInclude Include="src\Galaxy\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Galaxy\Renderer\Shader.h" />
     <ClInclude Include="src\Galaxy\Renderer\Texture.h" />
+    <ClInclude Include="src\Galaxy\Scene\Component.h" />
+    <ClInclude Include="src\Galaxy\Scene\Entity.h" />
+    <ClInclude Include="src\Galaxy\Scene\Managers.h" />
     <ClInclude Include="src\Galaxy\Scene\Scene.h" />
     <ClInclude Include="src\Galaxy\Scene\SceneCamera.h" />
     <ClInclude Include="src\Platform\Windows\DirectXBatchArray.h" />

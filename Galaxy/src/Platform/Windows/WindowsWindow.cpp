@@ -121,7 +121,17 @@ namespace Galaxy
 			UINT width = LOWORD(lParam);
 			UINT height = HIWORD(lParam);
 
-			m_Framebuffer->Resize(width, height);
+			//m_Framebuffer->Resize(width, height);
+
+			m_Context->GetRenderTargetView()->Release();
+			m_Context->GetSwapChain()->ResizeBuffers(1, width, height, DXGI_FORMAT_R8G8B8A8_UNORM, 0);
+
+			ID3D11Resource* backbuffer;
+
+			HRESULT hr = m_Context->GetSwapChain()->GetBuffer(0, __uuidof(backbuffer), (void**)&backbuffer);
+			hr = m_Context->GetDevice()->CreateRenderTargetView(backbuffer, nullptr, m_Context->GetRenderTargetView().GetAddressOf());
+
+			backbuffer->Release();
 
 			D3D11_VIEWPORT& view = m_Context->GetViewport();
 			view.Width = width;

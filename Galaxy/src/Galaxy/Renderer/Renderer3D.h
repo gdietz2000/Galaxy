@@ -20,7 +20,10 @@ namespace Galaxy
 		static void EndScene();
 		static void Flush();
 
-		static void DrawQuad(glm::vec3 position, glm::vec4 color);
+		static void DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color);
+		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color);
+
+		static void DrawQuad(const glm::mat4& transform, const glm::vec4& color);
 
 		struct Statistics
 		{

@@ -20,13 +20,10 @@ namespace Galaxy
 
 		void Invalidate();
 
-		virtual void* Get() const { return m_FrameData.Get(); }
-		virtual void** GetAddressOf() const { return (void**)m_FrameData.GetAddressOf(); }
+		virtual void* Get() const override { return m_FrameData.Get(); }
+		virtual void** GetAddressOf() const override { return (void**)m_FrameData.GetAddressOf(); }
 
-		virtual void* GetImGuiDrawable() const override { return m_SRV.Get(); }
-		virtual void** GetImGuiDrawableAddressOf() const override { return (void**)m_SRV.GetAddressOf(); }
-
-		virtual void Reset() { m_FrameData.Reset(); m_CopyTexture.Reset(); }
+		virtual void Reset() { m_FrameTexture.Reset(); m_CopyTexture.Reset(); }
 
 		virtual const FramebufferSpecification& GetFramebufferSpecification() const override { return m_Specs; }
 
@@ -38,11 +35,11 @@ namespace Galaxy
 		FramebufferSpecification m_Specs;
 		bool defaultRenderTargetView = true;
 
-		Microsoft::WRL::ComPtr<ID3D11Texture2D> m_FrameData;
+		Microsoft::WRL::ComPtr<ID3D11Texture2D> m_FrameTexture;
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> m_CopyTexture;
-		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_SRV;
+		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_FrameData;
 
-		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_RTV;
+		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_RenderTargetView;
 
 	};
 }

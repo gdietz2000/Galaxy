@@ -14,6 +14,8 @@
 
 #include <d3dcompiler.h>
 
+#include "glm/gtc/matrix_transform.hpp"
+
 namespace Galaxy
 {
 	struct QuadVertex
@@ -43,7 +45,7 @@ namespace Galaxy
 
 		Renderer3D::Statistics stats;
 
-		glm::vec3 positions[4];
+		glm::vec4 positions[4];
 	};
 
 	static RenderData3D data;
@@ -90,10 +92,10 @@ namespace Galaxy
 		data.m_ColorShader = Shader::Create("assets/shaders/StandardPixelShader.hlsl", Shader::ShaderType::Pixel);
 		data.m_ColorShader->Bind();
 
-		data.positions[0] = { -0.5f, -0.5f, 0.0f };
-		data.positions[1] = { 0.5f, -0.5f, 0.0f };
-		data.positions[2] = { 0.5f, 0.5f, 0.0f };
-		data.positions[3] = { -0.5f, 0.5f, 0.0f };
+		data.positions[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
+		data.positions[1] = { 0.5f, -0.5f, 0.0f, 1.0f };
+		data.positions[2] = { 0.5f, 0.5f, 0.0f, 1.0f };
+		data.positions[3] = { -0.5f, 0.5f, 0.0f, 1.0f };
 	}
 
 	void Renderer3D::Shutdown()
@@ -141,7 +143,20 @@ namespace Galaxy
 
 	}
 
-	void Renderer3D::DrawQuad(glm::vec3 position, glm::vec4 color)
+	void Renderer3D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
+	{
+		DrawQuad(glm::vec3(position.x, position.y, 0.0f), size, color);
+	}
+
+	void Renderer3D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
+	{
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
+			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+
+		DrawQuad(transform, color);
+	}
+
+	void Renderer3D::DrawQuad(const glm::mat4& transform, const glm::vec4& color)
 	{
 		constexpr size_t quadVertexCount = 4;
 
@@ -152,7 +167,7 @@ namespace Galaxy
 
 		for (size_t i = 0; i < quadVertexCount; i++)
 		{
-			data.QuadVertexBufferPtr->position = data.positions[i] + position;
+			data.QuadVertexBufferPtr->position = data.positions[i] * transform;
 			data.QuadVertexBufferPtr->texcoords = texcoords[i];
 			data.QuadVertexBufferPtr->color = color;
 			data.QuadVertexBufferPtr++;
