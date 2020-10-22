@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Galaxy.h>
+#include "panels/SceneHierarchy.h"
 
 namespace Galaxy
 {
@@ -31,5 +32,8 @@ namespace Galaxy
 		bool m_ViewportFocused = false;
 		bool m_ViewportHovered = false;
 		glm::vec2 m_ViewportSize = { 0.0f, 0.0f };
+
+		//Panels
+		SceneHierarcyPanel m_SceneHierarcyPanel;
 	};
 }

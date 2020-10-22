@@ -31,6 +31,8 @@ namespace Galaxy
 
 		m_CameraEntity = m_ActiveScene->CreateEntity("Camera");
 		m_CameraEntity.AddComponent<CameraComponent>();
+
+		m_SceneHierarcyPanel.SetContext(m_ActiveScene);
 	}
 
 	void EditorLayer::OnDetach()
@@ -53,7 +55,7 @@ namespace Galaxy
 		RenderCommand::Clear();
 
 		m_Framebuffer->Bind();
-		RenderCommand::SetClearColor(m_SceneColor);
+		RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
 		RenderCommand::Clear();
 
 		m_ActiveScene->OnUpdate(ts);
@@ -132,6 +134,8 @@ namespace Galaxy
 			ImGui::EndMenuBar();
 		}
 
+		m_SceneHierarcyPanel.OnImGuiRender();
+
 		ImGui::ShowDemoWindow();
 
 		ImGui::Begin("Settings");
@@ -142,10 +146,6 @@ namespace Galaxy
 		ImGui::Text("Quad Count: %d", stats.QuadCount);
 		ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
 		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
-
-		ImGui::Separator();
-
-		ImGui::ColorPicker4("Scene Picker", glm::value_ptr(m_SceneColor));
 
 		ImGui::End();
 

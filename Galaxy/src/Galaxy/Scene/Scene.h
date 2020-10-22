@@ -19,6 +19,7 @@ namespace Galaxy
 		void OnViewportResize(uint32_t width, uint32_t height);
 	private:
 		friend class Entity;
+		friend class SceneHierarcyPanel;
 
 		Registry* m_Registry = new Registry();
 		SceneCamera* m_SceneCamera;

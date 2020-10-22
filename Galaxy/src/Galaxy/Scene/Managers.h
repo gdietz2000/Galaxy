@@ -40,6 +40,8 @@ public:
 		m_AvailableEntities.pop();
 		++m_LivingEntityCount;
 
+		m_Entities.push_back(id);
+
 		return id;
 	}
 
@@ -49,6 +51,10 @@ public:
 		m_AvailableEntities.push(entity);
 
 		--m_LivingEntityCount;
+
+		std::vector<EntityID>::iterator position = std::find(m_Entities.begin(), m_Entities.end(), entity);
+		if (position != m_Entities.end())
+			m_Entities.erase(position);
 	}
 
 	void SetSignature(EntityID entity, Signature signature)
@@ -62,7 +68,11 @@ public:
 	}
 
 private:
+	friend class Registry;
+
 	std::queue<EntityID> m_AvailableEntities{};
+
+	std::vector<EntityID> m_Entities{};
 
 	std::array<Signature, MAX_ENTITIES> m_Signatures{};
 
@@ -360,6 +370,15 @@ public:
 
 		return m_ComponentManager->GetComponentArray<std::pair<T, U>>().get();
 
+	}
+
+	template<typename Function>
+	void each(Function func)
+	{
+		for (size_t i = 0; i < m_EntityManager->m_Entities.size() - 1; i++)
+		{
+			func(m_EntityManager->m_Entities[i]);
+		}
 	}
 
 private:
