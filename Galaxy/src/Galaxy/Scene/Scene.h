@@ -15,6 +15,8 @@ namespace Galaxy
 		~Scene();
 
 		Entity CreateEntity(std::string tagName = "Default");
+		void DestroyEntity(Entity entity);
+
 		void OnUpdate(Timestep ts);
 		void OnViewportResize(uint32_t width, uint32_t height);
 	private:

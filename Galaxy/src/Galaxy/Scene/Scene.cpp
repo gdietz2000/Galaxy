@@ -25,6 +25,11 @@ namespace Galaxy
 		return { id, this };
 	}
 
+	void Scene::DestroyEntity(Entity entity)
+	{
+		m_Registry->destroy(entity);
+	}
+
 	void Scene::OnUpdate(Timestep ts)
 	{
 		Camera* mainCamera = nullptr;

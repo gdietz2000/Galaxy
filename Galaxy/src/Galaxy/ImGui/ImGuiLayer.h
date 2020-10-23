@@ -31,6 +31,10 @@ namespace Galaxy
 		void Begin();
 		void End();
 	private:
+		void SetLightColorTheme();
+		void SetDarkColorTheme();
+
+	private:
 		bool m_BlockEvents = true;
 	};
 }

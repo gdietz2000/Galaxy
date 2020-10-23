@@ -58,7 +58,7 @@ namespace Galaxy
 		RenderCommand::Clear();
 
 		m_Framebuffer->Bind();
-		RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
+		RenderCommand::SetClearColor(m_SceneColor);
 		RenderCommand::Clear();
 
 		m_ActiveScene->OnUpdate(ts);
@@ -112,11 +112,16 @@ namespace Galaxy
 
 		// DockSpace
 		ImGuiIO& io = ImGui::GetIO();
+		ImGuiStyle& style = ImGui::GetStyle();
+		float minWinSizeX = style.WindowMinSize.x;
+		style.WindowMinSize.x = 370.0f;
 		if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
 		{
 			ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
 			ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
 		}
+
+		style.WindowMinSize.x = minWinSizeX;
 
 		if (ImGui::BeginMenuBar())
 		{
@@ -149,6 +154,9 @@ namespace Galaxy
 		ImGui::Text("Quad Count: %d", stats.QuadCount);
 		ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
 		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
+
+		ImGui::Separator();
+		ImGui::ColorEdit4("Scene Color", glm::value_ptr(m_SceneColor));
 
 		ImGui::End();
 

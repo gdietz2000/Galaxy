@@ -35,6 +35,14 @@ namespace Galaxy
 		if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
 			m_SelectionContext = {};
 
+		if (ImGui::BeginPopupContextWindow(0,1,false))
+		{
+			if (ImGui::MenuItem("Create Empty Entity"))
+				m_Context->CreateEntity("Empty Entity");
+
+			ImGui::EndPopup();
+		}
+
 		ImGui::End();
 
 		//Inspector Panel
@@ -50,12 +58,22 @@ namespace Galaxy
 	{
 		auto& tag = entity.GetComponent<TagComponent>().Tag;
 
-		ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ((m_SelectionContext == entity) ? ImGuiTreeNodeFlags_Selected : 0);
-
+		ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow 
+			| ((m_SelectionContext == entity) ? ImGuiTreeNodeFlags_Selected : 0);
+		flags |= ImGuiTreeNodeFlags_SpanAvailWidth;
 		bool opened = ImGui::TreeNodeEx((void*)(uint64_t)(uint32_t)entity, flags, tag.c_str());
 
 		if (ImGui::IsItemClicked())
 			m_SelectionContext = entity;
+
+		bool entityDeleted = false;
+		if (ImGui::BeginPopupContextItem())
+		{
+			if (ImGui::MenuItem("Delete Entity"))
+				entityDeleted = true;
+
+			ImGui::EndPopup();
+		}
 
 		if (opened)
 		{
@@ -64,6 +82,13 @@ namespace Galaxy
 			if (opened)
 				ImGui::TreePop();
 			ImGui::TreePop();
+		}
+
+		if (entityDeleted)
+		{
+			m_Context->DestroyEntity(entity);
+			if (m_SelectionContext == entity)
+				m_SelectionContext = {};
 		}
 	}
 
@@ -78,6 +103,31 @@ namespace Galaxy
 			strcpy_s(buffer, sizeof(buffer), tag.c_str());
 			if (ImGui::InputText("##Tag", buffer, sizeof(buffer)))
 				tag = std::string(buffer);
+
+			ImGui::SameLine();
+			ImGui::PushItemWidth(-1);
+
+			if (ImGui::Button("Add Component"))
+				ImGui::OpenPopup("AddComponent");
+
+			if (ImGui::BeginPopup("AddComponent"))
+			{
+				if (ImGui::MenuItem("Camera"))
+				{
+					m_SelectionContext.AddComponent<CameraComponent>();
+					ImGui::CloseCurrentPopup();
+				}
+
+				if (ImGui::MenuItem("Sprite Component"))
+				{
+					m_SelectionContext.AddComponent<SpriteRendererComponent>();
+					ImGui::CloseCurrentPopup();
+				}
+
+				ImGui::EndPopup();
+			}
+
+			ImGui::PopItemWidth();
 
 			DrawComponent<TransformComponent>("Transform Component", entity, [](TransformComponent& component)
 				{
@@ -167,15 +217,33 @@ namespace Galaxy
 			ImVec2 contentRegionAvailable = ImGui::GetContentRegionAvail();
 
 			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 4,4 });
+			float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
 			ImGui::Separator();
 			bool open = ImGui::TreeNodeEx((void*)typeid(T).hash_code(), treeNodeFlags, label.c_str());
 			ImGui::PopStyleVar();
+			ImGui::SameLine(contentRegionAvailable.x - lineHeight * 0.5f);
+			if (ImGui::Button("+", ImVec2{ lineHeight, lineHeight }))
+			{
+				ImGui::OpenPopup("ComponentSettings");
+			}
+		
+			bool removeComponent = false;
+			if (ImGui::BeginPopup("ComponentSettings"))
+			{
+				if (ImGui::MenuItem("Remove Component"))
+					removeComponent = true;
+
+				ImGui::EndPopup();
+			}
 
 			if (open)
 			{
 				func(component);
 				ImGui::TreePop();
 			}
+
+			if (removeComponent)
+				entity.RemoveComponent<T>();
 		}
 	
 	}

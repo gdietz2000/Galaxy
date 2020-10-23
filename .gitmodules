@@ -7,3 +7,6 @@
 [submodule "Galaxy/vendor/glm"]
 	path = Galaxy/vendor/glm
 	url = https://github.com/g-truc/glm.git
+[submodule "Galaxy/vendor/yaml-cpp"]
+	path = Galaxy/vendor/yaml-cpp
+	url = https://github.com/gdietz2000/yaml-cpp
