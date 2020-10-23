@@ -19,6 +19,7 @@ namespace Galaxy
 
 	void SceneCamera::SetOrthographic(float size, float nearClip, float farClip) 
 	{
+		m_ProjectionType = ProjectionType::Orthographic;
 		m_OrthographicSize = size;
 		m_OrthographicNear = nearClip;
 		m_OrthographicFar = farClip;
@@ -26,14 +27,31 @@ namespace Galaxy
 		RecalculateProjection();
 	}
 
+	void SceneCamera::SetPerspective(float fov, float nearClip, float farClip)
+	{
+		m_ProjectionType = ProjectionType::Perspective;
+		m_PerspectiveFov = fov;
+		m_PerspectiveNear = nearClip;
+		m_PerspectiveFar = farClip;
+
+		RecalculateProjection();
+	}
+
 	void SceneCamera::RecalculateProjection()
 	{
-		float orthoLeft = -m_OrthographicSize * 0.5f * m_AspectRatio;
-		float orthoRight = m_OrthographicSize * 0.5f * m_AspectRatio;
+		if (m_ProjectionType == ProjectionType::Orthographic)
+		{
+			float orthoLeft = -m_OrthographicSize * 0.5f * m_AspectRatio;
+			float orthoRight = m_OrthographicSize * 0.5f * m_AspectRatio;
 
-		float orthoBottom = -m_OrthographicSize * 0.5f;
-		float orthoTop = m_OrthographicSize * 0.5f;
+			float orthoBottom = -m_OrthographicSize * 0.5f;
+			float orthoTop = m_OrthographicSize * 0.5f;
 
-		m_Projection = glm::ortho(orthoLeft, orthoRight, orthoBottom, orthoTop, m_OrthographicNear, m_OrthographicFar);
+			m_Projection = glm::ortho(orthoLeft, orthoRight, orthoBottom, orthoTop, m_OrthographicNear, m_OrthographicFar);
+		}
+		else
+		{
+			m_Projection = glm::perspective(m_PerspectiveFov, m_AspectRatio, m_PerspectiveNear, m_PerspectiveFar);
+		}
 	}
 }
