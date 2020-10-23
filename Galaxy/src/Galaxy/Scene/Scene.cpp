@@ -9,13 +9,12 @@ namespace Galaxy
 {
 	Scene::Scene()
 	{
-		m_SceneCamera = new SceneCamera();
+
 	}
 
 	Scene::~Scene()
 	{
 		delete m_Registry;
-		delete m_SceneCamera;
 	}
 
 	Entity Scene::CreateEntity(std::string tagName)
@@ -40,7 +39,7 @@ namespace Galaxy
 				if (camera.Primary)
 				{
 					mainCamera = &camera.Camera;
-					tform = transform.Transform;
+					tform = transform.GetTransform();
 					break;
 				}
 			}
@@ -48,14 +47,14 @@ namespace Galaxy
 
 		if (mainCamera)
 		{
-			Renderer3D::BeginScene(*m_SceneCamera, tform);
+			Renderer3D::BeginScene(*mainCamera, tform);
 
 			auto renderView = m_Registry->view<TransformComponent, SpriteRendererComponent>();
 			for (auto entity : *renderView)
 			{
 				auto& [transform, sprite] = renderView->get(entity);
 
-				Renderer3D::DrawQuad(transform, sprite.Color);
+				Renderer3D::DrawQuad(transform.GetTransform(), sprite.Color);
 			}
 
 			Renderer3D::EndScene();
@@ -64,6 +63,15 @@ namespace Galaxy
 
 	void Scene::OnViewportResize(uint32_t width, uint32_t height)
 	{
-		m_SceneCamera->SetViewportSize(width, height);
+		m_ViewportWidth = width;
+		m_ViewportHeight = height;
+
+		auto view = m_Registry->view<CameraComponent>();
+		for (auto entity : *view)
+		{
+			auto& cameraComp = view->get(entity);
+			if (!cameraComp.FixedAspectRatio)
+				cameraComp.Camera.SetViewportSize(width, height);
+		}
 	}
 }

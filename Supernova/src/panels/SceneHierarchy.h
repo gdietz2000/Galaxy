@@ -18,6 +18,9 @@ namespace Galaxy
 	private:
 		void DrawEntityNode(Entity entity);
 		void DrawComponents(Entity entity);
+
+		template<typename T, typename UIFunction>
+		static void DrawComponent(const std::string& label, Entity entity, UIFunction func);
 	private:
 		Ref<Scene> m_Context;
 

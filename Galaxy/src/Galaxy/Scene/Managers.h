@@ -119,7 +119,7 @@ public:
 		m_EntityToIndexMap.erase(entity);
 		m_IndexToEntityMap.erase(indexOfLastElement);
 
-		for (size_t i = 0; i < m_Entities.size() - 1; i++)
+		for (size_t i = 0; i < m_Entities.size(); i++)
 		{
 			if(m_Entities[i] == entity)
 			{
@@ -157,11 +157,6 @@ public:
 		return m_Entities;
 	}
 
-	/**
-	 * @brief Call function on entities of specified component
-	 * @tparam Function that contains params of EntityID and desired Component
-	 * @example view<TagComponent>.each([=](auto& entityID, auto& tag) {std::cout << tag.Tag << std::endl;} );
-	 */
 	template<typename Func>
 	void each(Func func)
 	{
@@ -169,6 +164,12 @@ public:
 		{
 			func(m_IndexToEntityMap[i], m_ComponentArray[i]);
 		}
+	}
+
+	void reset()
+	{
+		while (m_Size != 0)
+			remove(m_Entities[0]);
 	}
 
 	std::vector<EntityID>::iterator begin()
@@ -351,31 +352,34 @@ public:
 		return m_ComponentManager->GetComponentArray<T>().get();
 	}
 
+	//Current Problem Child----------------Find a better way to do this
 	template<typename T, typename U>
 	ComponentArray<std::pair<T, U>>* view()
 	{
-		ComponentArray<T>* t = m_ComponentManager->GetComponentArray<T>().get();
-		ComponentArray<U>* u = m_ComponentManager->GetComponentArray<U>().get();
+		ComponentArray<T>& t = *m_ComponentManager->GetComponentArray<T>().get();
+		ComponentArray<U>& u = *m_ComponentManager->GetComponentArray<U>().get();
 
-		if (m_ComponentManager->GetComponentArray<std::pair<T,U>>() == nullptr)
-		{
+		if (m_ComponentManager->GetComponentArray<std::pair<T, U>>() == nullptr)
 			m_ComponentManager->RegisterComponent<std::pair<T, U>>();
+		else
+			m_ComponentManager->GetComponentArray<std::pair<T, U>>()->reset();
 
-			for (size_t i = 0; i < u->entities().size(); i++)
+		for (size_t i = 0; i < u.entities().size(); i++)
+		{
+			if (t.contains(u.entities()[i]))
 			{
-				if (t->contains(u->entities()[i]))
-					m_ComponentManager->GetComponentArray<std::pair<T, U>>()->insert(u->entities()[i], std::make_pair(t->get(u->entities()[i]), u->get(u->entities()[i])));
+				m_ComponentManager->GetComponentArray<std::pair<T, U>>()->insert(u.entities()[i],
+					std::make_pair(t.get(u.entities()[i]), u.get(u.entities()[i])));
 			}
 		}
 
 		return m_ComponentManager->GetComponentArray<std::pair<T, U>>().get();
-
 	}
 
 	template<typename Function>
 	void each(Function func)
 	{
-		for (size_t i = 0; i < m_EntityManager->m_Entities.size() - 1; i++)
+		for (size_t i = 0; i < m_EntityManager->m_Entities.size(); i++)
 		{
 			func(m_EntityManager->m_Entities[i]);
 		}

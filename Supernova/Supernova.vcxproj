@@ -91,27 +91,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Galaxy\Galaxy.vcxproj">
-      <Project>{CB7795B4-B719-C08A-A0D4-D3DE8C1547DB}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="assets\shaders\StandardPixelShader.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-    </FxCompile>
-    <FxCompile Include="assets\shaders\StandardVertexShader.hlsl" />
+    <ClInclude Include="src\EditorLayer.h" />
+    <ClInclude Include="src\panels\SceneHierarchy.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\EditorLayer.cpp" />
-    <ClCompile Include="src\panels\SceneHierarchy.cpp" />
-    <ClCompile Include="src\panels\SceneHierarchy.cpp" />
     <ClCompile Include="src\SupernovaApp.cpp" />
+    <ClCompile Include="src\panels\SceneHierarchy.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\EditorLayer.h" />
-    <ClInclude Include="src\panels\SceneHierarchy.h" />
-    <ClInclude Include="src\panels\SceneHierarchy.h" />
+    <ProjectReference Include="..\Galaxy\Galaxy.vcxproj">
+      <Project>{CB7795B4-B719-C08A-A0D4-D3DE8C1547DB}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

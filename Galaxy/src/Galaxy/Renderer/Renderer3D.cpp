@@ -167,7 +167,7 @@ namespace Galaxy
 
 		for (size_t i = 0; i < quadVertexCount; i++)
 		{
-			data.QuadVertexBufferPtr->position = data.positions[i] * transform;
+			data.QuadVertexBufferPtr->position = transform * data.positions[i];
 			data.QuadVertexBufferPtr->texcoords = texcoords[i];
 			data.QuadVertexBufferPtr->color = color;
 			data.QuadVertexBufferPtr++;
