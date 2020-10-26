@@ -22,7 +22,7 @@ namespace Galaxy
 
 		virtual Ref<Framebuffer> GetFramebuffer() const override;
 
-		inline virtual void* GetNativeWindow() const { return m_Window; }
+		inline virtual void* GetNativeWindow() const { return (HWND*)&m_Window; }
 		inline virtual void* GetContext() const { return m_Context; }
 
 	private:

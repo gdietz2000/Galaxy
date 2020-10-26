@@ -26,9 +26,8 @@ namespace Galaxy
 		friend class SceneHierarcyPanel;
 		friend class SceneSerializer;
 
-		Registry* m_Registry = new Registry();
+		Registry* m_Registry;
 
-		float m_ViewportWidth, m_ViewportHeight;
-		//SceneCamera* m_SceneCamera;
+		float m_ViewportWidth = 0, m_ViewportHeight = 0;
 	};
 }

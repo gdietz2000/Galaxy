@@ -19,6 +19,7 @@ namespace Galaxy
 	void SceneHierarcyPanel::SetContext(const Ref<Scene>& scene)
 	{
 		m_Context = scene;
+		m_SelectionContext = {};
 	}
 
 	void SceneHierarcyPanel::OnImGuiRender()

@@ -19,6 +19,10 @@ namespace Galaxy
 		virtual void OnImGuiRender(Timestep ts) override;
 
 	private:
+		void NewScene();
+		void OpenScene();
+		void SaveAsScene();
+
 		Ref<BatchArray> m_BatchArray;
 		Ref<Shader> m_VertexShader;
 		Ref<Framebuffer> m_Framebuffer;

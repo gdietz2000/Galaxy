@@ -122,6 +122,7 @@
     <ClInclude Include="src\Galaxy\Scene\Scene.h" />
     <ClInclude Include="src\Galaxy\Scene\SceneCamera.h" />
     <ClInclude Include="src\Galaxy\Scene\SceneSerializer.h" />
+    <ClInclude Include="src\Galaxy\Utilities\PlatformUtils.h" />
     <ClInclude Include="src\Platform\Windows\DirectXBatchArray.h" />
     <ClInclude Include="src\Platform\Windows\DirectXBuffer.h" />
     <ClInclude Include="src\Platform\Windows\DirectXContext.h" />
@@ -566,6 +567,7 @@
     <ClCompile Include="src\Platform\Windows\DirectXRendererAPI.cpp" />
     <ClCompile Include="src\Platform\Windows\DirectXShader.cpp" />
     <ClCompile Include="src\Platform\Windows\DirectXTexture2D.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsPlatformUtils.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\gxpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

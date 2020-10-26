@@ -351,6 +351,7 @@ public:
 	template<typename T>
 	ComponentArray<T>* view()
 	{
+		m_ComponentManager->RegisterComponent<T>();
 		return m_ComponentManager->GetComponentArray<T>().get();
 	}
 

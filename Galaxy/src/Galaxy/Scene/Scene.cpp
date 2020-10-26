@@ -9,7 +9,7 @@ namespace Galaxy
 {
 	Scene::Scene()
 	{
-
+		m_Registry = new Registry();
 	}
 
 	Scene::~Scene()

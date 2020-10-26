@@ -3,6 +3,7 @@
 #include "ImGui/imgui.h"
 #include "glm/gtc/type_ptr.hpp"
 #include "Galaxy/Scene/SceneSerializer.h"
+#include "Galaxy/Utilities/PlatformUtils.h"
 
 namespace Galaxy
 {
@@ -134,17 +135,14 @@ namespace Galaxy
 				// which we can't undo at the moment without finer window depth/z control.
 				//ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen_persistant);
 
-				if (ImGui::MenuItem("Serialize"))
-				{
-					SceneSerializer serializer(m_ActiveScene);
-					serializer.Serialize("assets/scenes/TempScene.gala");
-				}
+				if (ImGui::MenuItem("New", "Ctrl + N"))
+					NewScene();
 
-				if (ImGui::MenuItem("Deserialize"))
-				{
-					SceneSerializer serializer(m_ActiveScene);
-					serializer.Deserialize("assets/scenes/TempScene.gala");
-				}
+				if (ImGui::MenuItem("Open...", "Ctrl + O"))
+					OpenScene();
+
+				if (ImGui::MenuItem("Save As...", "Ctrl + Shift + S"))
+					SaveAsScene();
 
 				if (ImGui::MenuItem("Exit"))
 				{
@@ -190,5 +188,35 @@ namespace Galaxy
 		ImGui::End();
 		ImGui::PopStyleVar();
 		ImGui::End();
+	}
+
+	void EditorLayer::NewScene()
+	{
+		m_ActiveScene = CreateRef<Scene>();
+		m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+		m_SceneHierarcyPanel.SetContext(m_ActiveScene);
+	}
+
+	void EditorLayer::OpenScene()
+	{
+		std::string filepath = FileDialogs::OpenFile("Galaxy Scene (*.gala)\0*.gala\0");
+
+		if (!filepath.empty())
+		{
+			NewScene();
+			SceneSerializer serializer(m_ActiveScene);
+			serializer.Deserialize(filepath);
+		}
+	}
+
+	void EditorLayer::SaveAsScene()
+	{
+		std::string filepath = FileDialogs::SaveFile("Galaxy Scene (*.gala)\0*.gala\0");
+
+		if (!filepath.empty())
+		{
+			SceneSerializer serializer(m_ActiveScene);
+			serializer.Serialize(filepath);
+		}
 	}
 }
