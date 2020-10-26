@@ -2,6 +2,7 @@
 
 #include "ImGui/imgui.h"
 #include "glm/gtc/type_ptr.hpp"
+#include "Galaxy/Scene/SceneSerializer.h"
 
 namespace Galaxy
 {
@@ -26,6 +27,7 @@ namespace Galaxy
 
 		m_ActiveScene = CreateRef<Scene>();
 
+#if 0
 		auto square = m_ActiveScene->CreateEntity("Green Square");
 		square.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.0,1.0,0.0,1.0 });
 
@@ -34,6 +36,7 @@ namespace Galaxy
 
 		m_CameraEntity = m_ActiveScene->CreateEntity("Camera");
 		m_CameraEntity.AddComponent<CameraComponent>();
+#endif
 
 		m_SceneHierarcyPanel.SetContext(m_ActiveScene);
 	}
@@ -130,6 +133,18 @@ namespace Galaxy
 				// Disabling fullscreen would allow the window to be moved to the front of other windows,
 				// which we can't undo at the moment without finer window depth/z control.
 				//ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen_persistant);
+
+				if (ImGui::MenuItem("Serialize"))
+				{
+					SceneSerializer serializer(m_ActiveScene);
+					serializer.Serialize("assets/scenes/TempScene.gala");
+				}
+
+				if (ImGui::MenuItem("Deserialize"))
+				{
+					SceneSerializer serializer(m_ActiveScene);
+					serializer.Deserialize("assets/scenes/TempScene.gala");
+				}
 
 				if (ImGui::MenuItem("Exit"))
 				{

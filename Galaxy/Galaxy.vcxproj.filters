@@ -141,6 +141,9 @@
     <ClInclude Include="src\Galaxy\Scene\SceneCamera.h">
       <Filter>src\Galaxy\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="src\Galaxy\Scene\SceneSerializer.h">
+      <Filter>src\Galaxy\Scene</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\Windows\DirectXBatchArray.h">
       <Filter>src\Platform\Windows</Filter>
     </ClInclude>
@@ -1443,6 +1446,9 @@
       <Filter>src\Galaxy\Scene</Filter>
     </ClCompile>
     <ClCompile Include="src\Galaxy\Scene\SceneCamera.cpp">
+      <Filter>src\Galaxy\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Galaxy\Scene\SceneSerializer.cpp">
       <Filter>src\Galaxy\Scene</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\DirectXBatchArray.cpp">

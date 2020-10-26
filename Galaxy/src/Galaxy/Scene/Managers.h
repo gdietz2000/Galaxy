@@ -314,13 +314,15 @@ public:
 	}
 
 	template<typename T>
-	void add(EntityID entity, T component)
+	T& add(EntityID entity, T component)
 	{
 		m_ComponentManager->AddComponent(entity, component);
 
 		auto signature = m_EntityManager->GetSignature(entity);
 		signature.set(m_ComponentManager->GetComponentType<T>(), true);
 		m_EntityManager->SetSignature(entity, signature);
+
+		return m_ComponentManager->GetComponent<T>(entity);
 	}
 
 	template<typename T>
@@ -352,10 +354,16 @@ public:
 		return m_ComponentManager->GetComponentArray<T>().get();
 	}
 
-	//Current Problem Child----------------Find a better way to do this
 	template<typename T, typename U>
+	//Current Problem Child----------------Find a better way to do this
 	ComponentArray<std::pair<T, U>>* view()
 	{
+		if (m_ComponentManager->GetComponentArray<T>() == nullptr)
+			m_ComponentManager->RegisterComponent<T>();
+		
+		if (m_ComponentManager->GetComponentArray<U>() == nullptr)
+			m_ComponentManager->RegisterComponent<U>();
+
 		ComponentArray<T>& t = *m_ComponentManager->GetComponentArray<T>().get();
 		ComponentArray<U>& u = *m_ComponentManager->GetComponentArray<U>().get();
 

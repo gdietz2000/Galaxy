@@ -2,6 +2,8 @@
 
 #include "Managers.h"
 #include "SceneCamera.h"
+
+#include "Galaxy/Core/Core.h"
 #include "Galaxy/Core/Timestep.h"
 
 namespace Galaxy
@@ -22,6 +24,7 @@ namespace Galaxy
 	private:
 		friend class Entity;
 		friend class SceneHierarcyPanel;
+		friend class SceneSerializer;
 
 		Registry* m_Registry = new Registry();
 

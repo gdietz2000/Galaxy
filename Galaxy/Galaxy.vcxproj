@@ -58,7 +58,7 @@
       <PrecompiledHeaderFile>gxpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GX_PLATFORM_WINDOWS;GX_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\ImGui;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\ImGui;vendor\glm;vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -75,7 +75,7 @@
       <PrecompiledHeaderFile>gxpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GX_PLATFORM_WINDOWS;GX_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\ImGui;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\ImGui;vendor\glm;vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -121,6 +121,7 @@
     <ClInclude Include="src\Galaxy\Scene\Managers.h" />
     <ClInclude Include="src\Galaxy\Scene\Scene.h" />
     <ClInclude Include="src\Galaxy\Scene\SceneCamera.h" />
+    <ClInclude Include="src\Galaxy\Scene\SceneSerializer.h" />
     <ClInclude Include="src\Platform\Windows\DirectXBatchArray.h" />
     <ClInclude Include="src\Platform\Windows\DirectXBuffer.h" />
     <ClInclude Include="src\Platform\Windows\DirectXContext.h" />
@@ -557,6 +558,7 @@
     <ClCompile Include="src\Galaxy\Renderer\Texture.cpp" />
     <ClCompile Include="src\Galaxy\Scene\Scene.cpp" />
     <ClCompile Include="src\Galaxy\Scene\SceneCamera.cpp" />
+    <ClCompile Include="src\Galaxy\Scene\SceneSerializer.cpp" />
     <ClCompile Include="src\Platform\Windows\DirectXBatchArray.cpp" />
     <ClCompile Include="src\Platform\Windows\DirectXBuffer.cpp" />
     <ClCompile Include="src\Platform\Windows\DirectXContext.cpp" />
@@ -572,6 +574,9 @@
   <ItemGroup>
     <ProjectReference Include="vendor\ImGui\ImGui.vcxproj">
       <Project>{C0FF640D-2C14-8DBE-F595-301E616989EF}</Project>
+    </ProjectReference>
+    <ProjectReference Include="vendor\yaml-cpp\yaml-cpp.vcxproj">
+      <Project>{88F1A057-74BE-FB62-9DD7-E90A890331F1}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

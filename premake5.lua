@@ -13,9 +13,11 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 IncludeDir = {}
 IncludeDir["ImGui"] = "Galaxy/vendor/ImGui"
 IncludeDir["glm"] = "Galaxy/vendor/glm"
+IncludeDir["yaml_cpp"] = "Galaxy/vendor/yaml-cpp/include"
 
 group "Dependencies"
 	include "Galaxy/vendor/ImGui"
+	include "Galaxy/vendor/yaml-cpp"
 group ""
 
 	project "Galaxy"
@@ -45,11 +47,13 @@ group ""
 			"%{prj.name}/vendor/spdlog/include",
 			"%{IncludeDir.ImGui}",
 			"%{IncludeDir.glm}",
+			"%{IncludeDir.yaml_cpp}",
 		}
 
 		links
 		{
-			"ImGui"
+			"ImGui",
+			"yaml-cpp",
 		}
 
 		defines 

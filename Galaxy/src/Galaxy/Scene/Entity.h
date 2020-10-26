@@ -12,9 +12,9 @@ namespace Galaxy
 			: m_Handle(handle), m_Scene(scene) {}
 
 		template<typename T>
-		void AddComponent(T Component = T())
+		T& AddComponent(T Component = T())
 		{
-			m_Scene->m_Registry->add<T>(m_Handle, Component);
+			return m_Scene->m_Registry->add<T>(m_Handle, Component);
 		}
 
 		template<typename T>
